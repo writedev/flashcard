@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Whistleblowers : Friends or Foes ? – Flashcards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/7.0.0/fuse.min.js"></script>
+<style>
+:root{--w:min(720px,100%);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#e8edf5;--bg2:#d5deec;--ink:#101827;--muted:#5b6578;--front:#ffffff;--fink:#101827;--back:#14213d;--bink:#f7f1de;--accent:#e08a00;--ok:#16a34a;--ko:#dc2626;--line:#c5cfe0;--shadow:0 24px 50px -20px rgba(16,24,39,.35)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a0f1e;--bg2:#141c36;--ink:#eef1f8;--muted:#8d99b3;--front:#161e38;--fink:#eef1f8;--back:#f7e9c0;--bink:#1a2340;--accent:#ffb703;--line:#28335a;--shadow:0 24px 50px -20px rgba(0,0,0,.7)}}
+:root[data-theme="dark"]{--bg:#0a0f1e;--bg2:#141c36;--ink:#eef1f8;--muted:#8d99b3;--front:#161e38;--fink:#eef1f8;--back:#f7e9c0;--bink:#1a2340;--accent:#ffb703;--line:#28335a;--shadow:0 24px 50px -20px rgba(0,0,0,.7)}
+:root{--tok-key:#b45309;--tok-str:#0f766e;--tok-num:#1d4ed8;--tok-bool:#be185d}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--tok-key:#e0af68;--tok-str:#9ece6a;--tok-num:#7aa2f7;--tok-bool:#bb9af7}}
+:root[data-theme="dark"]{--tok-key:#e0af68;--tok-str:#9ece6a;--tok-num:#7aa2f7;--tok-bool:#bb9af7}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%;overflow-x:hidden}
+html,body{scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+::-webkit-scrollbar{width:9px;height:9px}::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px;border:2px solid transparent;background-clip:padding-box}
+*{box-sizing:border-box}
+body{margin:0;min-height:100%;overflow-x:hidden;color:var(--ink);font-family:Manrope,system-ui,sans-serif;background:radial-gradient(900px 500px at 50% -10%,var(--bg2),var(--bg));display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px 16px 30px}
+header{width:var(--w);display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+h1{font-family:Fraunces,Georgia,serif;font-size:1.35rem;margin:0;line-height:1.15}
+h1 small{display:block;font:500 .78rem Manrope,sans-serif;color:var(--muted);margin-top:3px}
+.icon{width:42px;height:42px;border-radius:50%;padding:0;font-size:1.2rem;flex:none}
+button{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:700 .9rem Manrope,sans-serif;padding:11px 18px;border-radius:999px;border:1px solid var(--line);background:var(--front);color:var(--fink);cursor:pointer;transition:transform .12s,border-color .12s}
+button svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+button:hover{border-color:var(--accent)}button:active{transform:scale(.96)}
+button:focus-visible,.scene:focus-visible,.sw input:focus-visible+i{outline:3px solid var(--accent);outline-offset:3px}
+button:disabled{opacity:.4;cursor:default}
+.sw{display:flex;align-items:center;gap:10px;width:var(--w);font-weight:700;font-size:.9rem;cursor:pointer;margin-bottom:14px}
+.sw input{position:absolute;opacity:0}
+.sw i{width:44px;height:26px;border-radius:99px;background:var(--line);position:relative;transition:background .2s;flex:none}
+.sw i::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform .2s}
+.sw input:checked+i{background:var(--accent)}.sw input:checked+i::after{transform:translateX(18px)}
+.sw span span{display:block;font-weight:500;font-size:.78rem;color:var(--muted)}
+.bar{width:var(--w);height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:3px;transition:width .3s}
+.meta{width:var(--w);display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted);font-weight:700;margin:8px 0 16px;min-height:1.3em}
+.meta .ok{color:var(--ok)}.meta .ko{color:var(--ko)}
+.scene{width:var(--w);height:clamp(280px,46vh,520px);perspective:1400px;cursor:grab;outline:none;touch-action:pan-y;user-select:none;-webkit-user-select:none;position:relative}
+.scene:active{cursor:grabbing}
+.card{position:relative;width:100%;height:100%;transition:transform .55s cubic-bezier(.3,1.2,.4,1);transform-style:preserve-3d}
+.card.flip{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:26px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:34px;text-align:center;box-shadow:var(--shadow);border:2px solid var(--tint,transparent);transition:border-color .1s}
+.front{background:var(--front);color:var(--fink)}
+.back{background:var(--back);color:var(--bink);transform:rotateY(180deg)}
+.pill{position:absolute;top:16px;font-size:.75rem;font-weight:700;padding:5px 12px;border-radius:99px;background:rgba(127,140,170,.16)}
+.tag{left:16px}.lang{right:16px;background:var(--accent);color:#101827}
+.txt{font-family:Fraunces,Georgia,serif;font-weight:700;font-size:clamp(1.5rem,min(5.4vw,5.5vh),2.9rem);line-height:1.25}
+.note{margin-top:12px;font-size:.85rem;opacity:.7}
+.hint{position:absolute;bottom:14px;font-size:.75rem;opacity:.5}
+.stamp{position:absolute;top:22px;left:50%;transform:translateX(-50%);z-index:5;pointer-events:none;opacity:0;font-weight:800;font-size:1.05rem;padding:8px 20px;border-radius:99px;color:#fff}
+.stamp.ok{background:var(--ok)}.stamp.ko{background:var(--ko)}
+.ctl{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;justify-content:center}
+.main{background:var(--accent);border-color:var(--accent);color:#101827}
+.tip{margin-top:16px;font-size:.78rem;color:var(--muted);text-align:center}
+.result{width:var(--w);background:var(--front);color:var(--fink);border-radius:26px;padding:30px;text-align:center;box-shadow:var(--shadow)}
+.result[hidden]{display:none}
+.big{font:700 3.6rem Fraunces,serif;color:var(--accent);line-height:1.1}
+.result ul{text-align:left;font-size:.9rem;padding-left:20px;max-height:210px;overflow:auto}
+.opts{width:var(--w);display:flex;gap:10px 28px;flex-wrap:wrap;margin-bottom:14px}
+.opts .sw{width:auto;margin:0}
+.ans{width:var(--w);display:flex;gap:10px;margin-top:16px}.ans[hidden]{display:none}
+.ans input{flex:1;min-width:0;font:600 1rem Manrope,sans-serif;padding:12px 20px;border-radius:99px;border:2px solid var(--line);background:var(--front);color:var(--fink)}
+.ans input:focus{outline:none;border-color:var(--accent)}.ans input.good{border-color:var(--ok)}.ans input.bad{border-color:var(--ko)}
+.fb{width:var(--w);min-height:1.4em;text-align:center;font-weight:700;font-size:.9rem;margin-top:8px}.fb.good{color:var(--ok)}.fb.bad{color:var(--ko)}
+dialog{width:min(720px,94vw);max-height:90vh;border:1px solid var(--line);border-radius:22px;background:var(--front);color:var(--fink);padding:0;box-shadow:var(--shadow);font-family:Manrope,system-ui,sans-serif}
+dialog::backdrop{background:rgba(8,12,24,.6)}
+.dl-in{padding:22px;overflow:auto;max-height:90vh}
+.dl-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.dl-head h2{font-family:Fraunces,Georgia,serif;font-size:1.5rem;margin:0}
+.dl-cur{margin:6px 0 0;font-size:.85rem;color:var(--muted);font-weight:700}
+dialog h3{display:flex;align-items:center;gap:10px;font-size:1rem;margin:22px 0 4px}
+dialog h3 b{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#101827;font-size:.85rem}
+.dl-help{margin:0 0 10px;font-size:.85rem;color:var(--muted)}
+.field{width:100%;font:600 .88rem Manrope,sans-serif;padding:11px 14px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.field:focus{outline:none;border-color:var(--accent)}
+.plainedit{width:100%;font:500 .85rem/1.5 Manrope,sans-serif;padding:12px 14px;border-radius:14px;border:2px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical}
+.plainedit:focus{outline:none;border-color:var(--accent)}
+.codebox{width:100%;max-height:230px;overflow:auto;white-space:pre-wrap;word-break:break-word;font:500 .78rem/1.6 "JetBrains Mono",ui-monospace,Consolas,monospace;padding:14px 16px;border-radius:14px;border:2px solid var(--line);background:var(--bg);color:var(--ink);margin:0}
+.codeedit{position:relative;width:100%;height:190px;border-radius:14px;border:2px solid var(--line);background:var(--bg);overflow:hidden}
+.codeedit:focus-within{border-color:var(--accent)}
+.codeedit pre,.codeedit textarea{position:absolute;inset:0;margin:0;padding:14px 16px;font:500 .78rem/1.6 "JetBrains Mono",ui-monospace,Consolas,monospace;white-space:pre-wrap;word-break:break-word;overflow:auto;border:none}
+.codeedit pre{pointer-events:none;color:var(--ink)}
+.codeedit textarea{background:transparent;color:transparent;caret-color:var(--ink);resize:none}
+.codeedit textarea:focus{outline:none}
+.tok-key{color:var(--tok-key)}.tok-str{color:var(--tok-str)}.tok-num{color:var(--tok-num)}.tok-bool{color:var(--tok-bool)}.tok-punc{color:var(--muted)}
+.rules{margin:4px 0 6px;padding-left:22px;font-size:.83rem;color:var(--ink);line-height:1.5}
+.rules li{margin-bottom:3px}
+.editrow{display:flex;gap:10px;margin-bottom:10px}
+.editrow .field{max-width:260px}
+.ctl-l{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.dl-status{margin-top:8px;font-size:.85rem;font-weight:700;white-space:pre-wrap;min-height:1.2em}.dl-status.bad{color:var(--ko)}.dl-status.good{color:var(--ok)}
+.txt{overflow-wrap:anywhere}
+@media (max-width:520px){#myDecks .lbl{display:none}#myDecks{width:42px;padding:0}}
+.sw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin:10px 0 18px}
+.sw-card{position:relative;display:flex;flex-direction:column;gap:8px;align-items:flex-start;padding:10px 12px;border-radius:14px;border:2px solid var(--line);background:var(--bg);cursor:pointer;text-align:left;font:700 .78rem Manrope,sans-serif;color:var(--ink)}
+.sw-card.active{border-color:var(--accent)}
+.sw-dots{display:flex;gap:4px}
+.sw-dots span{width:16px;height:16px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
+.sw-chk{position:absolute;top:8px;right:8px;width:18px;height:18px;border-radius:50%;background:var(--accent);color:#101827;display:none;align-items:center;justify-content:center}
+.sw-chk svg{width:11px;height:11px;stroke-width:3}
+.sw-card.active .sw-chk{display:flex}
+.sw-del{position:absolute;top:6px;right:6px;width:22px;height:22px;padding:0;border-radius:50%;background:var(--front);display:none}
+.sw-card.custom:not(.active) .sw-del{display:flex}
+.sw-del svg{width:12px;height:12px}
+.cform{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:12px;margin:10px 0 14px}
+.cfield{display:flex;flex-direction:column;gap:5px;font-size:.78rem;font-weight:700;color:var(--muted)}
+.cfield input[type=color]{width:100%;height:38px;padding:3px;border-radius:10px;border:2px solid var(--line);background:var(--front);cursor:pointer}
+@media (prefers-reduced-motion:reduce){.card,.bar i{transition:none}}
+@supports selector(::-webkit-scrollbar){.codebox,.codeedit pre,.codeedit textarea{scrollbar-width:thin}}
+</style>
+</head>
+<body>
+<header>
+  <h1><span id="dtitle">Whistleblowers : Friends or Foes ?</span><small id="dsub">Français au recto · anglais au verso</small></h1>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end"><button id="myDecks"></button><button class="icon" id="palette" aria-label="Choisir un thème">🎨</button><button class="icon" id="fs" aria-label="Plein écran">⛶</button><button class="icon" id="theme" aria-label="Changer le thème">☾</button></div>
+</header>
+<div class="opts"><label class="sw"><input type="checkbox" id="learn"><i></i><span>Mode apprentissage<span>Droite = trouvé, gauche = pas trouvé</span></span></label>
+<label class="sw"><input type="checkbox" id="typing"><i></i><span>Réponse au clavier<span>Écris la traduction anglaise</span></span></label>
+<label class="sw" id="rowFuse" style="display:none"><input type="checkbox" id="noFuse"><i></i><span>Validation stricte<span>Désactive la tolérance aux fautes de frappe</span></span></label></div>
+<div class="bar"><i id="bar"></i></div>
+<div class="meta"><span id="count"></span><span id="score"></span></div>
+<div class="scene" id="scene" tabindex="0" role="button" aria-label="Retourner la carte">
+  <div class="stamp" id="stamp"></div>
+  <div class="card" id="card">
+    <div class="face front"><span class="pill lang">FR</span><div class="txt" id="fr"></div><span class="hint">Clique pour retourner</span></div>
+    <div class="face back"><span class="pill lang">EN</span><div class="txt" id="en"></div><div class="note" id="note"></div></div>
+  </div>
+</div>
+<div class="ans" id="ansRow" hidden><input id="ans" type="text" placeholder="Écris la traduction en anglais…" autocomplete="off" autocapitalize="off" spellcheck="false"><button id="ok" class="main"></button></div>
+<div class="fb" id="fb"></div>
+<div class="ctl">
+  <button id="bL">←</button>
+  <button id="flip" class="main"></button>
+  <button id="bR">→</button>
+  <button id="undo"></button>
+  <button id="shuf"></button>
+</div>
+<div class="tip">Glisse la carte à gauche ou à droite · clic ou espace pour retourner · ↑ verso, ↓ recto · Ctrl+Z annuler</div>
+<div class="result" id="result" hidden>
+  <div>Score final</div><div class="big" id="rs"></div><div id="rp" class="meta" style="justify-content:center"></div>
+  <div id="rm" hidden></div>
+  <div class="ctl"><button id="showMiss"></button><button id="redo"></button><button id="again" class="main"></button></div>
+</div>
+<dialog id="dlg" aria-labelledby="dlgT">
+ <div class="dl-in">
+  <div class="dl-head"><h2 id="dlgT">Mes flashcards</h2><button class="icon" id="dlgX" aria-label="Fermer"></button></div>
+  <p class="dl-cur" id="dlgCur"></p>
+  <h3><b>1</b>Demande à une IA de créer ton paquet</h3>
+  <p class="dl-help">Copie le prompt dans ChatGPT, Claude, Gemini… Il explique déjà tout le format : la seule partie à adapter est ton contenu, tout en bas.</p>
+  <pre class="codebox" id="pFormat"><code></code></pre>
+  <ol class="rules" id="pRules"></ol>
+  <p class="dl-help" style="margin-top:14px">Exemple de sortie :</p>
+  <pre class="codebox" id="pExample"><code></code></pre>
+  <p class="dl-help" style="margin-top:14px"><b>À adapter :</b> colle ici ton cours, ta liste de vocabulaire ou ton thème.</p>
+  <div class="editrow"><input type="number" class="field" id="wantCount" min="1" max="200" placeholder="Nombre de cartes (optionnel)"></div>
+  <textarea id="userContent" class="plainedit" rows="4" spellcheck="false" placeholder="Colle ici ton cours, ta liste de vocabulaire ou ton thème…"></textarea>
+  <div class="ctl-l"><button id="cpPrompt" class="main"></button></div>
+  <h3><b>2</b>Colle le JSON reçu</h3>
+  <p class="dl-help">Il reste affiché ici après le chargement, tu peux le corriger et recharger.</p>
+  <div class="codeedit"><pre><code id="jsonHl"></code></pre><textarea id="jsonBox" spellcheck="false" placeholder='{ "title": "Mon paquet", "cards": [ { "fr": "bonjour", "en": "hello" } ] }'></textarea></div>
+  <div class="dl-status" id="dlStatus" role="status" aria-live="polite"></div>
+  <div class="ctl-l"><button id="loadJson" class="main"></button><button id="importBtn"></button><input type="file" id="fileIn" accept=".json,application/json,text/plain" hidden></div>
+  <h3><b>3</b>Exemple</h3>
+  <p class="dl-help">Le paquet « Whistleblowers » est l'exemple de ce format. Copie-le pour t'en inspirer, ou recharge-le pour abandonner ton paquet.</p>
+  <div class="ctl-l"><button id="cpExample"></button><button id="loadExample"></button></div>
+ </div>
+</dialog>
+<dialog id="dlgTheme" aria-labelledby="dlgThT">
+ <div class="dl-in">
+  <div class="dl-head"><h2 id="dlgThT">Thème</h2><button class="icon" id="dlgThX" aria-label="Fermer"></button></div>
+  <p class="dl-help" style="margin-top:6px">Choisis un thème prêt à l'emploi, ou crée le tien.</p>
+  <div class="sw-grid" id="themeGrid"></div>
+  <h3><b>+</b>Créer mon thème</h3>
+  <div class="cform" id="cform"></div>
+  <input type="text" class="field" id="cName" placeholder="Nom du thème" style="margin-bottom:10px">
+  <div class="ctl-l"><button id="cCreate" class="main"></button></div>
+ </div>
+</dialog>
+<script>
+const $=id=>document.getElementById(id);
+const EXAMPLE={
+"title":"Whistleblowers : Friends or Foes ?",
+"subtitle":"Français au recto · anglais au verso",
+"cards":[
+{"fr":"pirater","en":"to hack","category":"Hacking"},
+{"fr":"un pirate informatique","en":"a hacker","category":"Hacking"},
+{"fr":"espionner","en":"to spy on","category":"Hacking"},
+{"fr":"entrer par effraction","en":"to break into","category":"Hacking"},
+{"fr":"puiser dans","en":"to tap into","category":"Hacking"},
+{"fr":"un criminel / hors-la-loi","en":"a lawbreaker","category":"Hacking"},
+{"fr":"mise sur écoute","en":"phone-tapping","category":"Hacking"},
+{"fr":"espionnage","en":"espionage","category":"Hacking"},
+{"fr":"commettre un acte de trahison","en":"to commit treason","category":"Hacking"},
+{"fr":"enfreindre la loi","en":"to transgress the law","category":"Hacking"},
+{"fr":"nuire à","en":"to harm","category":"Hacking"},
+{"fr":"non autorisé","en":"unauthorized","category":"Hacking"},
+{"fr":"les renseignements","en":"intelligence","category":"Hacking"},
+{"fr":"une exclu(sivité)","en":"an exclusive report","category":"Journalism"},
+{"fr":"obéir à la loi","en":"to comply with the law","category":"Journalism"},
+{"fr":"collecter / rassembler","en":"to gather","category":"Journalism"},
+{"fr":"être respectueux de la loi","en":"to be law-abiding","category":"Journalism"},
+{"fr":"des fichiers top secret","en":"top secret files","category":"Journalism"},
+{"fr":"des preuves","en":"evidence","category":"Journalism","note":"indénombrable"},
+{"fr":"(im)partial","en":"(un)biased","category":"Journalism"},
+{"fr":"prudent","en":"cautious","category":"Journalism"},
+{"fr":"officieux / confidentiel","en":"off the record","category":"Journalism"},
+{"fr":"officiel / officiellement","en":"on the record","category":"Journalism"},
+{"fr":"au lieu de","en":"instead of","category":"Connecteurs logiques","note":"+ GN / V-ING"},
+{"fr":"au contraire de","en":"contrary to","category":"Connecteurs logiques","note":"+ GN / V-ING"},
+{"fr":"bien que","en":"although","category":"Connecteurs logiques"},
+{"fr":"tandis que","en":"whereas","category":"Connecteurs logiques"},
+{"fr":"c'est pourquoi","en":"therefore","category":"Connecteurs logiques"},
+{"fr":"de même","en":"similarly","category":"Connecteurs logiques"},
+{"fr":"finalement","en":"eventually","category":"Connecteurs logiques"},
+{"fr":"numérique","en":"digital","category":"Internet"},
+{"fr":"un réseau social","en":"a social network","category":"Internet"},
+{"fr":"se répandre comme une traînée de poudre","en":"to spread like wildfire","category":"Internet"},
+{"fr":"les données","en":"data","category":"Internet","note":"indénombrable"},
+{"fr":"les informations","en":"information","category":"Internet","note":"indénombrable"},
+{"fr":"un lanceur d'alerte","en":"a whistleblower","category":"Whistleblowing"},
+{"fr":"légal / illégal","en":"legal / illegal","category":"Whistleblowing"},
+{"fr":"moral / immoral","en":"moral / immoral","category":"Whistleblowing"},
+{"fr":"mettre en garde contre","en":"to warn against","category":"Whistleblowing"},
+{"fr":"condamner","en":"to condemn","category":"Whistleblowing"},
+{"fr":"dénoncer","en":"to denounce","category":"Whistleblowing"},
+{"fr":"tenir X pour responsable de Y","en":"to hold X responsible for Y","category":"Whistleblowing"},
+{"fr":"révéler / dévoiler","en":"to disclose","category":"Whistleblowing"},
+{"fr":"prendre position","en":"to take a stand","category":"Whistleblowing"},
+{"fr":"éprouver un sens du devoir","en":"to feel a sense of duty","category":"Whistleblowing"},
+{"fr":"creuser","en":"to dig deeper","category":"Whistleblowing"},
+{"fr":"tirer la sonnette d'alarme","en":"to sound the alarm bell","category":"Whistleblowing"},
+{"fr":"méfait / faute","en":"misdeeds / wrongdoings","category":"Whistleblowing"},
+{"fr":"une frontière mince","en":"a fine line","category":"Whistleblowing"},
+{"fr":"surveiller / suivre de près","en":"to keep tabs on","category":"Whistleblowing"},
+{"fr":"miner / saper","en":"to undermine","category":"Whistleblowing"},
+{"fr":"représailles","en":"retaliation","category":"Whistleblowing"},
+{"fr":"bon (au lieu de GOOD)","en":"virtuous, ethical, honest, right, correct, worthy","category":"Adjectifs"},
+{"fr":"mauvais (au lieu de BAD)","en":"wrong, unacceptable, inadequate, inappropriate","category":"Adjectifs"}
+]};
+const toCards=d=>d.cards.map(c=>({fr:c.fr,en:c.en,n:c.note||"",c:c.category||""}));
+let all=toCards(EXAMPLE);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt=d=>'{\n  "title": '+JSON.stringify(d.title)+',\n  "subtitle": '+JSON.stringify(d.subtitle||"")+',\n  "cards": [\n'+d.cards.map(c=>'    '+JSON.stringify(c)).join(',\n')+'\n  ]\n}';
+const pick=f=>EXAMPLE.cards.find(c=>c.fr===f);
+function hlJSON(src){
+ if(!src)return"";
+ const re=/("(?:\\.|[^"\\])*"(\s*:)?)|(\btrue\b|\bfalse\b|\bnull\b)|(-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)|([{}\[\],:])/g;
+ let out="",last=0,m;
+ while((m=re.exec(src))){out+=esc(src.slice(last,m.index));const tok=m[0];let cls="tok-punc";
+  if(m[1])cls=m[2]?"tok-key":"tok-str";else if(m[3])cls="tok-bool";else if(m[4])cls="tok-num";
+  out+='<span class="'+cls+'">'+esc(tok)+'</span>';last=re.lastIndex}
+ return out+esc(src.slice(last))}
+const FORMAT_TXT=`{
+  "title": "Titre du paquet",
+  "subtitle": "Sous-titre court (optionnel)",
+  "cards": [
+    { "fr": "texte en français", "en": "traduction anglaise", "category": "thème (optionnel)", "note": "remarque courte (optionnel)" }
+  ]
+}`;
+const RULES=["\"title\", et pour chaque carte \"fr\" et \"en\", sont obligatoires (texte non vide). \"subtitle\", \"category\" et \"note\" sont optionnels : omets-les si tu n'as rien à mettre.",
+"\"fr\" est le recto de la carte (français) et \"en\" est le verso (anglais). Le verso sert aussi de réponse que l'utilisateur peut taper au clavier : écris-le court, sans phrase d'explication.",
+"Si plusieurs traductions sont acceptées, sépare-les par \" / \" ou \", \" (une seule suffit pour valider). Pour une partie facultative, utilise des parenthèses, par exemple \"(un)biased\".",
+"Pour du vocabulaire : verbes à l'infinitif avec \"to\" (to hack), noms avec leur article (a hacker), comme dans l'exemple.",
+"\"note\" sert aux rappels de grammaire courts, par exemple \"+ GN / V-ING\" ou \"indénombrable\".",
+"JSON strict : guillemets doubles, aucune virgule après le dernier élément, guillemets internes échappés avec \\\".",
+"Pas de doublons : une seule notion par carte."];
+const EXAMPLE_OUT=fmt({title:"Vocabulaire d'exemple",subtitle:"Français au recto · anglais au verso",cards:[pick("pirater"),pick("au lieu de"),pick("un lanceur d'alerte")]});
+function buildPrompt(){
+ const n=$("wantCount").value.trim(),content=$("userContent").value.trim();
+ return "Tu es un assistant qui crée des flashcards pour une application web. Réponds avec UNIQUEMENT un objet JSON valide : pas de texte avant ou après, pas de balises de code markdown.\n\n"+
+ "FORMAT EXACT :\n"+FORMAT_TXT+"\n\nRÈGLES :\n"+RULES.map((r,i)=>(i+1)+". "+r).join("\n")+
+ "\n\nEXEMPLE DE SORTIE :\n"+EXAMPLE_OUT+
+ "\n\nCONTENU À TRANSFORMER EN FLASHCARDS (nombre de cartes souhaité : "+(n||"...")+") :\n"+(content||"[COLLE ICI TON COURS, TA LISTE DE VOCABULAIRE OU TON THÈME]")}
+function checkDeck(d){
+ const arr=Array.isArray(d)?d:d&&d.cards;
+ if(!Array.isArray(arr))throw new Error('Il manque la liste "cards" (un tableau de cartes).');
+ if(!arr.length)throw new Error('La liste "cards" est vide.');
+ if(arr.length>2000)throw new Error("Trop de cartes (maximum 2000).");
+ const errs=[],cards=[],str=v=>typeof v==="string"?v.trim():"";
+ arr.forEach((c,k)=>{const n="Carte n°"+(k+1)+" : ";
+  if(!c||typeof c!=="object"||Array.isArray(c)){errs.push(n+'ce n\'est pas un objet { "fr": …, "en": … }.');return}
+  const fr=str(c.fr),en=str(c.en);
+  if(!fr)errs.push(n+'champ "fr" manquant ou vide.');
+  if(!en)errs.push(n+'champ "en" manquant ou vide.');
+  if(fr&&en)cards.push({fr,en,note:str(c.note),category:str(c.category)})});
+ if(errs.length)throw new Error(errs.slice(0,6).join("\n")+(errs.length>6?"\n… et "+(errs.length-6)+" autre(s) erreur(s).":""));
+ const obj=Array.isArray(d)?{}:d;
+ return{title:str(obj.title)||"Mes flashcards",subtitle:str(obj.subtitle),cards}}
+function parseDeck(text){
+ const t=text.trim().replace(/^```[a-z]*\s*/i,"").replace(/\s*```$/,"");
+ if(!t)throw new Error("Le champ est vide : colle d'abord le JSON.");
+ let d;
+ try{d=JSON.parse(t)}catch(e){
+  const a=t.search(/[\[{]/),b=Math.max(t.lastIndexOf("}"),t.lastIndexOf("]"));
+  try{if(a<0||b<a)throw e;d=JSON.parse(t.slice(a,b+1))}catch(e2){throw new Error("JSON invalide : "+e.message)}}
+ return checkDeck(d)}
+let deckInfo={title:EXAMPLE.title,n:EXAMPLE.cards.length,custom:false};
+function setDeck(d,custom,persist){
+ all=toCards(d);deckInfo={title:d.title,n:d.cards.length,custom};
+ $("dtitle").textContent=d.title;$("dsub").textContent=d.subtitle||"Français au recto · anglais au verso";document.title=d.title+" – Flashcards";
+ if(persist){try{custom?localStorage.setItem("customDeck",JSON.stringify(d)):localStorage.removeItem("customDeck")}catch(e){}}
+ start()}
+const P={left:'<path d="M19 12H5M11 6l-6 6 6 6"/>',right:'<path d="M5 12h14M13 6l6 6-6 6"/>',x:'<path d="M6 6l12 12M18 6L6 18"/>',check:'<path d="M4 12.5l5 5L20 6.5"/>',flip:'<path d="M20 11a8 8 0 0 0-14-4L4 9M4 4v5h5M4 13a8 8 0 0 0 14 4l2-2M20 20v-5h-5"/>',shuffle:'<path d="M3 7h3c5 0 6 10 12 10h3M3 17h3c1.5 0 2.7-.7 3.7-1.8M14.3 8.8C15.3 7.7 16.5 7 18 7h3M18 4l3 3-3 3M18 14l3 3-3 3"/>',eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',undo:'<path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>',deck:'<path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/>',copy:'<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/>',upload:'<path d="M12 16V4M6 10l6-6 6 6M4 20h16"/>',redo:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/>',palette:'<path d="M12 3a9 9 0 1 0 0 18c1.2 0 2-1 2-2 0-.6-.3-1-.6-1.4-.3-.4-.5-.8-.5-1.3 0-1 .8-1.8 1.8-1.8H16a4 4 0 0 0 4-4c0-4.4-3.6-7.5-8-7.5z"/><circle cx="7.5" cy="10.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="12" cy="7.2" r="1.2" fill="currentColor" stroke="none"/><circle cx="16.3" cy="10" r="1.2" fill="currentColor" stroke="none"/>',trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>'};
+const ic=n=>'<svg viewBox="0 0 24 24" aria-hidden="true">'+P[n]+'</svg>';
+let typing=false,checked=false,lastOK=false,noFuse=false;
+const STOP=new Set(["the","x","y","someone","something","somebody","sb","sth","smth"]);
+const canon=t=>{let w=t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9 ]/g," ").split(" ").filter(x=>x&&!STOP.has(x));
+ if(w.length>1&&["to","a","an"].includes(w[0]))w.shift();return w.join("").replace(/z/g,"s")};
+function dist(a,b){const m=a.length,n=b.length,d=[];for(let x=0;x<=m;x++)d[x]=[x];for(let y=1;y<=n;y++)d[0][y]=y;
+ for(let x=1;x<=m;x++)for(let y=1;y<=n;y++){const c=a[x-1]===b[y-1]?0:1;d[x][y]=Math.min(d[x-1][y]+1,d[x][y-1]+1,d[x-1][y-1]+c);
+  if(x>1&&y>1&&a[x-1]===b[y-2]&&a[x-2]===b[y-1])d[x][y]=Math.min(d[x][y],d[x-2][y-2]+1)}return d[m][n]}
+function grade(inp,en){
+ const T=[...new Set([en,en.replace(/\([^)]*\)/g,""),en.replace(/[()]/g,"")].flatMap(v=>[v,...v.split(/[\/,]/)]).map(canon).filter(Boolean))];
+ const fz=(!noFuse&&typeof Fuse!=="undefined")?new Fuse(T.map(t=>({t})),{keys:["t"],includeScore:true,threshold:.25,ignoreLocation:true,distance:100}):null;
+ const test=s=>{const c=canon(s);if(!c)return null;if(T.includes(c))return 0;if(noFuse||c.length<=4)return null;
+  if(fz){const r=fz.search(c).find(x=>Math.abs(x.item.t.length-c.length)<=2&&dist(c,x.item.t)<=(x.item.t.length<=8?1:2));return r?1:null}
+  let best=null;for(const t of T){const d=dist(c,t);if(d<=(t.length<=4?0:t.length<=8?1:2)&&(best===null||d<best))best=d}return best};
+ const r=test(inp);if(r!==null)return{ok:true,typo:r>0};
+ const parts=inp.split(/[,;\/]/).filter(q=>canon(q));
+ if(parts.length>1){const rs=parts.map(test);if(rs.every(x=>x!==null))return{ok:true,typo:rs.some(x=>x>0),n:parts.length}}
+ return{ok:false}}
+function resetAns(){checked=false;const a=$("ans");a.value="";a.readOnly=false;a.className="";$("fb").textContent="";$("fb").className="fb";
+ $("ok").innerHTML=ic("check")+"Valider";$("ansRow").hidden=!typing;if(typing)a.focus({preventScroll:true})}
+function check(){const raw=$("ans").value;if(!canon(raw))return;
+ const g=grade(raw,deck[i].en);lastOK=g.ok;checked=true;
+ $("ans").className=g.ok?"good":"bad";$("ans").readOnly=true;
+ $("fb").className="fb "+(g.ok?"good":"bad");
+ $("fb").textContent=!g.ok?"Pas tout à fait : "+deck[i].en:g.n?"Correct ("+g.n+" réponses valides) · toutes : "+deck[i].en:g.typo?"Correct, à une faute près : "+deck[i].en:"Correct !";
+ card.classList.add("flip");$("ok").innerHTML=ic("right")+"Suivante"}
+function proceed(){step(learn?(lastOK?1:-1):-1)}
+let hist=[],deck=[],i=0,found=0,missed=[],learn=false,drag=null,busy=false;
+const card=$("card"),scene=$("scene"),stamp=$("stamp"),root=document.documentElement;
+/* thème */
+function setTheme(t){root.setAttribute("data-theme",t);$("theme").textContent=t==="dark"?"☀":"☾";try{localStorage.setItem("theme",t)}catch(e){}}
+let saved=null;try{saved=localStorage.getItem("theme")}catch(e){}
+setTheme(saved||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));
+$("theme").onclick=()=>setTheme(root.getAttribute("data-theme")==="dark"?"light":"dark");
+/* paquet */
+const mix=l=>{const a=l.slice();for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]]}return a};
+function start(list){hist=[];deck=mix(list||all);i=0;found=0;missed=[];$("result").hidden=true;scene.style.display="";$("flip").disabled=false;show()}
+function show(){const d=deck[i];card.style.transition="none";card.classList.remove("flip");void card.offsetWidth;card.style.transition="";
+ $("fr").textContent=d.fr;$("en").textContent=d.en;$("note").textContent=d.n;
+ resetAns();
+ $("count").textContent="Carte "+(i+1)+" / "+deck.length;
+ $("bar").style.width=((learn?i:i+1)/deck.length*100)+"%";
+ $("score").innerHTML=learn?'<span class="ok">✓ '+found+'</span> · <span class="ko">✗ '+missed.length+'</span>':"";
+ $("undo").disabled=!hist.length;
+ $("bL").innerHTML=learn?ic("x")+"Pas trouvé":ic("left")+"Précédente";$("bR").innerHTML=learn?ic("check")+"Trouvé":ic("right")+"Suivante"}
+function undo(){if(busy||!hist.length)return;const h=hist.pop();i=h.i;found=h.found;missed=h.missed;
+ $("result").hidden=true;scene.style.display="";$("flip").disabled=false;reset();show()}
+function flip(){card.classList.toggle("flip")}
+function reset(){scene.style.transition="none";scene.style.transform="";scene.style.opacity=1;stamp.style.opacity=0;scene.style.setProperty("--tint","transparent")}
+function step(dir){if(busy)return;busy=true;
+ scene.style.transition="transform .25s,opacity .25s";scene.style.transform="translateX("+dir*700+"px) rotate("+dir*25+"deg)";scene.style.opacity=0;
+ setTimeout(()=>{apply(dir);reset();busy=false;
+  if(scene.style.display!=="none"&&!matchMedia("(prefers-reduced-motion:reduce)").matches)scene.animate([{opacity:0,transform:"scale(.94) translateY(12px)"},{opacity:1,transform:"none"}],{duration:240,easing:"ease-out"})},250)}
+function apply(dir){
+ hist.push({i,found,missed:missed.slice()});
+ if(learn){if(dir>0)found++;else missed.push(deck[i]);i++;if(i>=deck.length){finish();return}}
+ else i=(i+dir+deck.length)%deck.length;
+ show()}
+function finish(){scene.style.display="none";$("ansRow").hidden=true;$("fb").textContent="";$("flip").disabled=true;$("bar").style.width="100%";
+ $("count").textContent="Terminé";$("score").textContent="";
+ $("rs").textContent=found+" / "+deck.length;$("rp").textContent=Math.round(found/deck.length*100)+" % de réussite";
+ $("rm").innerHTML="<ul>"+missed.map(m=>"<li>"+esc(m.fr)+" → "+esc(m.en)+"</li>").join("")+"</ul>";$("rm").hidden=true;
+ $("showMiss").innerHTML=ic("eye")+"Voir ce qui est à revoir";$("redo").innerHTML=ic("redo")+"Refaire les ratées";
+ $("showMiss").style.display=$("redo").style.display=missed.length?"":"none";
+ if(!missed.length)$("rp").textContent+=" · Parfait, aucune erreur !";$("result").hidden=false}
+/* glisser */
+scene.addEventListener("pointerdown",e=>{if(busy)return;drag={x:e.clientX,dx:0};scene.setPointerCapture(e.pointerId);scene.style.transition="none"});
+scene.addEventListener("pointermove",e=>{if(!drag)return;const dx=drag.dx=e.clientX-drag.x;
+ scene.style.transform="translateX("+dx+"px) rotate("+dx/25+"deg)";
+ if(learn&&Math.abs(dx)>8){const R=dx>0;stamp.className="stamp "+(R?"ok":"ko");stamp.textContent=R?"Trouvé":"Pas trouvé";
+  stamp.style.opacity=Math.min(Math.abs(dx)/120,1);scene.style.setProperty("--tint",R?"var(--ok)":"var(--ko)")}
+ else{stamp.style.opacity=0;scene.style.setProperty("--tint","transparent")}});
+function release(){if(!drag)return;const dx=drag.dx;drag=null;
+ if(Math.abs(dx)>100)step(dx<0?-1:1);
+ else{if(Math.abs(dx)<6)flip();scene.style.transition="transform .2s";scene.style.transform="";stamp.style.opacity=0;scene.style.setProperty("--tint","transparent")}}
+scene.addEventListener("pointerup",release);scene.addEventListener("pointercancel",release);
+$("flip").onclick=flip;$("bL").onclick=()=>step(-1);$("bR").onclick=()=>step(1);$("shuf").onclick=()=>start();
+$("again").onclick=()=>start();$("showMiss").onclick=()=>{const h=$("rm").hidden=!$("rm").hidden;$("showMiss").innerHTML=ic("eye")+(h?"Voir ce qui est à revoir":"Masquer la liste")};$("redo").onclick=()=>start(missed);
+$("learn").onchange=e=>{learn=e.target.checked;start()};
+$("ok").onclick=()=>checked?proceed():check();
+$("typing").onchange=e=>{typing=e.target.checked;$("rowFuse").style.display=typing?"flex":"none";resetAns()};
+$("noFuse").onchange=e=>{noFuse=e.target.checked};
+if(!document.fullscreenEnabled)$("fs").style.display="none";
+$("fs").onclick=()=>{try{(document.fullscreenElement?document.exitFullscreen():root.requestFullscreen()).catch(()=>{})}catch(e){}};
+document.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="z"&&e.target.id!=="ans"){e.preventDefault();undo();return}
+ if(!$("result").hidden)return;
+ if(e.target.id==="ans"){if(e.key==="Enter"){e.preventDefault();checked?proceed():check()}return}
+ if(e.key==="ArrowUp"){e.preventDefault();card.classList.add("flip")}else if(e.key==="ArrowDown"){e.preventDefault();card.classList.remove("flip")}
+ else if(e.key==="ArrowLeft")step(-1);else if(e.key==="ArrowRight")step(1);
+ else if(e.key===" "&&!["BUTTON","INPUT"].includes(e.target.tagName)){e.preventDefault();flip()}});
+$("flip").innerHTML=ic("flip")+"Retourner";$("shuf").innerHTML=ic("shuffle")+"Mélanger";$("undo").innerHTML=ic("undo")+"Annuler";$("undo").onclick=undo;$("again").innerHTML=ic("redo")+"Recommencer";
+/* --- éditeur JSON avec coloration --- */
+const jsonTa=$("jsonBox"),jsonHl=$("jsonHl");
+function updJsonHl(){jsonHl.innerHTML=hlJSON(jsonTa.value)}
+jsonTa.addEventListener("input",updJsonHl);
+jsonTa.addEventListener("scroll",()=>{jsonHl.parentElement.scrollTop=jsonTa.scrollTop;jsonHl.parentElement.scrollLeft=jsonTa.scrollLeft});
+function fillEditor(text){jsonTa.value=text;updJsonHl()}
+/* --- mes flashcards (JSON) --- */
+const dlg=$("dlg"),stat=(t,k)=>{$("dlStatus").textContent=t;$("dlStatus").className="dl-status "+(k||"")};
+let lastDeckText="";
+async function copyText(text,btn){let ok=false;
+ try{await navigator.clipboard.writeText(text);ok=true}catch(e){
+  const t=document.createElement("textarea");t.value=text;t.style.cssText="position:fixed;opacity:0";document.body.appendChild(t);t.select();
+  try{ok=document.execCommand("copy")}catch(e2){}t.remove()}
+ const old=btn.innerHTML;btn.innerHTML=ic(ok?"check":"x")+(ok?"Copié !":"Copie impossible");setTimeout(()=>btn.innerHTML=old,1800);return ok}
+function openDlg(){$("pFormat").querySelector("code").innerHTML=hlJSON(FORMAT_TXT);
+ $("pRules").innerHTML=RULES.map(r=>"<li>"+esc(r).replace(/&quot;([^&]*?)&quot;/g,'<b>&quot;$1&quot;</b>')+"</li>").join("");
+ $("pExample").querySelector("code").innerHTML=hlJSON(EXAMPLE_OUT);
+ stat("");
+ $("dlgCur").textContent="Paquet actuel : « "+deckInfo.title+" » · "+deckInfo.n+" cartes · "+(deckInfo.custom?"personnalisé":"exemple");
+ dlg.showModal()}
+function loadFrom(text){try{const d=parseDeck(text);lastDeckText=text;setDeck(d,true,true);fillEditor(text);stat("« "+d.title+" » chargé : "+d.cards.length+" cartes.","good")}catch(e){stat(e.message,"bad")}}
+$("myDecks").innerHTML=ic("deck")+'<span class="lbl">Mes flashcards</span>';$("myDecks").onclick=openDlg;
+$("dlgX").innerHTML=ic("x");$("dlgX").onclick=()=>dlg.close();
+dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
+$("cpPrompt").innerHTML=ic("copy")+"Copier le prompt";$("cpPrompt").onclick=e=>copyText(buildPrompt(),e.currentTarget);
+$("loadJson").innerHTML=ic("check")+"Charger mes flashcards";$("loadJson").onclick=()=>loadFrom(jsonTa.value);
+$("importBtn").innerHTML=ic("upload")+"Importer un fichier .json";$("importBtn").onclick=()=>$("fileIn").click();
+$("fileIn").onchange=async e=>{const f=e.target.files[0];e.target.value="";if(!f)return;
+ try{const t=await f.text();fillEditor(t);loadFrom(t)}catch(err){stat("Lecture du fichier impossible.","bad")}};
+$("cpExample").innerHTML=ic("copy")+"Copier l'exemple JSON";
+$("cpExample").onclick=async e=>{const b=e.currentTarget,t=fmt(EXAMPLE);if(!await copyText(t,b)){fillEditor(t);stat("Copie automatique impossible : l'exemple est dans le champ ci-dessus, copie-le à la main.","bad")}};
+$("loadExample").innerHTML=ic("redo")+"Recharger le paquet d'exemple";$("loadExample").onclick=()=>{lastDeckText="";setDeck(EXAMPLE,false,true);fillEditor("");dlg.close()};
+try{const sv=localStorage.getItem("customDeck");if(sv){const txt=sv;setDeck(checkDeck(JSON.parse(sv)),true,false);lastDeckText=txt;fillEditor(txt)}}catch(e){try{localStorage.removeItem("customDeck")}catch(e2){}}
+
+/* --- thèmes --- */
+const THEME_KEYS=["bg","bg2","ink","muted","front","fink","back","bink","accent","ok","ko","line","shadow"];
+const THEMES=[
+{id:"auto",name:"Automatique",dots:["#9aa5b8","#e08a00"]},
+{id:"light",name:"Clair",vars:{bg:"#e8edf5",bg2:"#d5deec",ink:"#101827",muted:"#5b6578",front:"#ffffff",fink:"#101827",back:"#14213d",bink:"#f7f1de",accent:"#e08a00",ok:"#16a34a",ko:"#dc2626",line:"#c5cfe0",shadow:"0 24px 50px -20px rgba(16,24,39,.35)"}},
+{id:"dark",name:"Sombre",vars:{bg:"#0a0f1e",bg2:"#141c36",ink:"#eef1f8",muted:"#8d99b3",front:"#161e38",fink:"#eef1f8",back:"#f7e9c0",bink:"#1a2340",accent:"#ffb703",ok:"#16a34a",ko:"#dc2626",line:"#28335a",shadow:"0 24px 50px -20px rgba(0,0,0,.7)"}},
+{id:"catppuccin-latte",name:"Catppuccin Latte",vars:{bg:"#eff1f5",bg2:"#e6e9ef",ink:"#4c4f69",muted:"#6c6f85",front:"#ffffff",fink:"#4c4f69",back:"#4c4f69",bink:"#eff1f5",accent:"#fe640b",ok:"#40a02b",ko:"#d20f39",line:"#ccd0da",shadow:"0 24px 50px -20px rgba(76,79,105,.25)"}},
+{id:"catppuccin-mocha",name:"Catppuccin Mocha",vars:{bg:"#1e1e2e",bg2:"#181825",ink:"#cdd6f4",muted:"#a6adc8",front:"#313244",fink:"#cdd6f4",back:"#cdd6f4",bink:"#1e1e2e",accent:"#fab387",ok:"#a6e3a1",ko:"#f38ba8",line:"#45475a",shadow:"0 24px 50px -20px rgba(0,0,0,.65)"}},
+{id:"one-dark",name:"One Dark",vars:{bg:"#21252b",bg2:"#1b1e23",ink:"#abb2bf",muted:"#6b717d",front:"#2c313a",fink:"#abb2bf",back:"#abb2bf",bink:"#282c34",accent:"#61afef",ok:"#98c379",ko:"#e06c75",line:"#3e4451",shadow:"0 24px 50px -20px rgba(0,0,0,.6)"}},
+{id:"dracula",name:"Dracula",vars:{bg:"#282a36",bg2:"#21222c",ink:"#f8f8f2",muted:"#6272a4",front:"#343746",fink:"#f8f8f2",back:"#f8f8f2",bink:"#282a36",accent:"#ff79c6",ok:"#50fa7b",ko:"#ff5555",line:"#44475a",shadow:"0 24px 50px -20px rgba(0,0,0,.6)"}},
+{id:"nord",name:"Nord",vars:{bg:"#2e3440",bg2:"#262b36",ink:"#e5e9f0",muted:"#8891a3",front:"#3b4252",fink:"#e5e9f0",back:"#e5e9f0",bink:"#2e3440",accent:"#88c0d0",ok:"#a3be8c",ko:"#bf616a",line:"#4c566a",shadow:"0 24px 50px -20px rgba(0,0,0,.55)"}},
+{id:"gruvbox",name:"Gruvbox Dark",vars:{bg:"#282828",bg2:"#1d2021",ink:"#ebdbb2",muted:"#a89984",front:"#3c3836",fink:"#ebdbb2",back:"#ebdbb2",bink:"#282828",accent:"#fe8019",ok:"#b8bb26",ko:"#fb4934",line:"#504945",shadow:"0 24px 50px -20px rgba(0,0,0,.55)"}},
+{id:"solarized-light",name:"Solarized Light",vars:{bg:"#fdf6e3",bg2:"#f3ecd4",ink:"#073642",muted:"#657b83",front:"#ffffff",fink:"#073642",back:"#073642",bink:"#fdf6e3",accent:"#cb4b16",ok:"#859900",ko:"#dc322f",line:"#e8e0c6",shadow:"0 24px 50px -20px rgba(7,54,66,.25)"}},
+{id:"tokyo-night",name:"Tokyo Night",vars:{bg:"#1a1b26",bg2:"#14151f",ink:"#c0caf5",muted:"#565f89",front:"#24283b",fink:"#c0caf5",back:"#c0caf5",bink:"#1a1b26",accent:"#7aa2f7",ok:"#9ece6a",ko:"#f7768e",line:"#2f354d",shadow:"0 24px 50px -20px rgba(0,0,0,.6)"}}
+];
+let customThemes=[];try{customThemes=JSON.parse(localStorage.getItem("customThemes")||"[]")}catch(e){customThemes=[]}
+let activeTheme="auto";try{activeTheme=localStorage.getItem("activeTheme")||"auto"}catch(e){}
+const hexToRgb=h=>{h=h.replace("#","");if(h.length===3)h=h.split("").map(c=>c+c).join("");const n=parseInt(h,16);return[n>>16&255,n>>8&255,n&255]};
+const rgbToHex=a=>"#"+a.map(x=>Math.max(0,Math.min(255,Math.round(x))).toString(16).padStart(2,"0")).join("");
+const mixHex=(h1,h2,t)=>{const a=hexToRgb(h1),b=hexToRgb(h2);return rgbToHex(a.map((v,i)=>v+(b[i]-v)*t))};
+const luminance=h=>{const[r,g,b]=hexToRgb(h);return(r*299+g*587+b*114)/1000};
+function allThemes(){return[...THEMES,...customThemes.map(c=>({id:"custom:"+c.id,name:c.name,vars:c.vars,custom:true,cid:c.id}))]}
+function clearThemeVars(){THEME_KEYS.forEach(k=>root.style.removeProperty("--"+k))}
+function applyThemeVars(v){THEME_KEYS.forEach(k=>v[k]&&root.style.setProperty("--"+k,v[k]))}
+function applyTheme(id,persist){
+ activeTheme=id;
+ if(id==="auto")clearThemeVars();
+ else{const t=allThemes().find(x=>x.id===id);if(t&&t.vars)applyThemeVars(t.vars)}
+ if(persist!==false)try{localStorage.setItem("activeTheme",id)}catch(e){}
+ renderThemeGrid()}
+function renderThemeGrid(){
+ $("themeGrid").innerHTML=allThemes().map(t=>{
+  const v=t.vars,dots=t.dots||[v.bg,v.accent];
+  return '<div class="sw-card'+(activeTheme===t.id?" active":"")+(t.custom?" custom":"")+'" data-id="'+t.id+'" tabindex="0" role="button">'
+   +'<span class="sw-dots"><span style="background:'+dots[0]+'"></span><span style="background:'+dots[1]+'"></span></span>'
+   +'<span>'+esc(t.name)+'</span>'
+   +'<span class="sw-chk">'+ic("check")+'</span>'
+   +(t.custom?'<button class="icon sw-del" data-del="'+t.cid+'" aria-label="Supprimer">'+ic("trash")+'</button>':"")
+   +'</div>'}).join("")}
+$("themeGrid").addEventListener("click",e=>{
+ const del=e.target.closest("[data-del]");
+ if(del){e.stopPropagation();customThemes=customThemes.filter(c=>c.id!==del.dataset.del);
+  try{localStorage.setItem("customThemes",JSON.stringify(customThemes))}catch(err){}
+  if(activeTheme==="custom:"+del.dataset.del)applyTheme("auto");else renderThemeGrid();return}
+ const card=e.target.closest(".sw-card");if(card)applyTheme(card.dataset.id)});
+const CDEF={bg:"#1e1e2e",front:"#2a2a3d",back:"#eae6da",ink:"#e4e4e8",bink:"#1e1e2e",accent:"#f5a623"};
+const CLABEL={bg:"Fond",front:"Carte (recto)",back:"Carte (verso)",ink:"Texte recto",bink:"Texte verso",accent:"Accent"};
+$("cform").innerHTML=Object.keys(CDEF).map(k=>'<label class="cfield">'+CLABEL[k]+'<input type="color" id="c_'+k+'" value="'+CDEF[k]+'"></label>').join("");
+$("cCreate").innerHTML=ic("check")+"Créer ce thème";
+$("cCreate").onclick=()=>{
+ const g=k=>$("c_"+k).value,bg=g("bg"),ink=g("ink");
+ const vars={bg,front:g("front"),back:g("back"),ink,fink:ink,bink:g("bink"),accent:g("accent"),
+  bg2:mixHex(bg,ink,.12),muted:mixHex(ink,bg,.42),line:mixHex(ink,bg,.78),ok:"#16a34a",ko:"#dc2626",
+  shadow:luminance(bg)>140?"0 24px 50px -20px rgba(16,24,39,.3)":"0 24px 50px -20px rgba(0,0,0,.6)"};
+ const id=Date.now().toString(36),name=$("cName").value.trim()||"Mon thème";
+ customThemes.push({id,name,vars});try{localStorage.setItem("customThemes",JSON.stringify(customThemes))}catch(e){}
+ $("cName").value="";applyTheme("custom:"+id)};
+$("palette").innerHTML=ic("palette");$("palette").onclick=()=>{renderThemeGrid();$("dlgTheme").showModal()};
+$("dlgThX").innerHTML=ic("x");$("dlgThX").onclick=()=>$("dlgTheme").close();
+$("dlgTheme").addEventListener("click",e=>{if(e.target===$("dlgTheme"))$("dlgTheme").close()});
+applyTheme(activeTheme,false);
+start();
+</script>
+</body>
+</html>
