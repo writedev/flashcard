@@ -4,10 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Whistleblowers : Friends or Foes ? – Flashcards</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/7.0.0/fuse.min.js"></script>
+<meta name="description" content="Flashcards de vocabulaire anglais : mode apprentissage, réponse au clavier, paquets personnalisés. Fonctionne hors ligne.">
+<meta name="theme-color" content="#e8edf5" id="themeColor">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Flashcards">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/manrope-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/fraunces-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<script src="assets/fuse.min.js"></script>
 <style>
+@font-face{font-family:Fraunces;font-style:normal;font-weight:600;font-display:swap;src:url(assets/fonts/fraunces-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:Fraunces;font-style:normal;font-weight:700;font-display:swap;src:url(assets/fonts/fraunces-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:Manrope;font-style:normal;font-weight:500;font-display:swap;src:url(assets/fonts/manrope-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:Manrope;font-style:normal;font-weight:700;font-display:swap;src:url(assets/fonts/manrope-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:400;font-display:swap;src:url(assets/fonts/jetbrains-mono-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:600;font-display:swap;src:url(assets/fonts/jetbrains-mono-latin-600-normal.woff2) format("woff2")}
 :root{--w:min(720px,100%);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
 --bg:#e8edf5;--bg2:#d5deec;--ink:#101827;--muted:#5b6578;--front:#ffffff;--fink:#101827;--back:#14213d;--bink:#f7f1de;--accent:#e08a00;--ok:#16a34a;--ko:#dc2626;--line:#c5cfe0;--shadow:0 24px 50px -20px rgba(16,24,39,.35)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a0f1e;--bg2:#141c36;--ink:#eef1f8;--muted:#8d99b3;--front:#161e38;--fink:#eef1f8;--back:#f7e9c0;--bink:#1a2340;--accent:#ffb703;--line:#28335a;--shadow:0 24px 50px -20px rgba(0,0,0,.7)}}
@@ -110,6 +125,68 @@ dialog h3 b{display:inline-grid;place-items:center;width:26px;height:26px;border
 .cform{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:12px;margin:10px 0 14px}
 .cfield{display:flex;flex-direction:column;gap:5px;font-size:.78rem;font-weight:700;color:var(--muted)}
 .cfield input[type=color]{width:100%;height:38px;padding:3px;border-radius:10px;border:2px solid var(--line);background:var(--front);cursor:pointer}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+body{min-height:100dvh}
+dialog{overscroll-behavior:contain}
+body:has(dialog[open]){overflow:hidden}
+/* hiérarchie des boutons : 1 principal · 2 navigation · 3 outils discrets */
+.ctl.prim{margin-top:22px}
+.ctl.sec{margin-top:10px;gap:6px}
+.ghost{background:transparent;border-color:transparent;color:var(--muted);font-size:.8rem;padding:8px 14px}
+.ghost svg{width:16px;height:16px}
+.ghost:hover{border-color:var(--line);color:var(--fink)}
+.ghost:disabled{opacity:.35}
+.tip .tc{display:none}
+@media (hover:none){.tip .kb{display:none}.tip .tc{display:inline}}
+@media (max-width:560px){
+ body{padding:12px 12px calc(20px + env(safe-area-inset-bottom));justify-content:flex-start}
+ header{margin-bottom:12px;gap:8px;align-items:flex-start}
+ h1{font-size:1.1rem}
+ h1 small{font-size:.72rem}
+ header>div{flex:none;flex-wrap:nowrap!important;gap:6px!important}
+ .icon{width:44px;height:44px}
+ #myDecks{width:44px;height:44px;padding:0}
+ .opts{flex-direction:column;gap:10px;margin-bottom:12px}
+ .sw{font-size:.88rem;min-height:36px}
+ .sw span span{font-size:.74rem}
+ .meta{margin:8px 0 12px}
+ .scene{height:clamp(220px,35dvh,420px)}
+ .face{padding:24px 18px;border-radius:22px}
+ .pill{top:12px;font-size:.7rem}
+ .lang{right:12px}
+ .txt{font-size:clamp(1.35rem,6.4vw,2rem)}
+ .note{font-size:.8rem}
+ .ans{gap:8px;margin-top:12px}
+ .ans input{font-size:16px;padding:12px 16px;min-height:46px}
+ .ans button{padding:11px 14px;min-height:46px}
+ .fb{font-size:.85rem}
+ .ctl.prim{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:var(--w);margin-top:14px}
+ .ctl.prim #flip{grid-column:1/-1;order:-1;min-height:50px;font-size:1rem}
+ .ctl.prim #bL,.ctl.prim #bR{min-height:48px;padding:11px 8px}
+ .ctl.sec{width:var(--w);margin-top:6px}
+ .ctl.sec .ghost{flex:1;min-height:44px}
+ .tip{margin-top:10px;font-size:.74rem}
+ .result{padding:22px 16px;border-radius:22px}
+ .big{font-size:3rem}
+ .result .ctl{flex-direction:column;align-items:stretch}
+ .result .ctl button{min-height:46px}
+ dialog{width:100%;max-width:100%;max-height:92dvh;margin:auto 0 0;border-radius:22px 22px 0 0}
+ .dl-in{padding:18px 16px calc(18px + env(safe-area-inset-bottom));max-height:92dvh}
+ .dl-head h2{font-size:1.25rem}
+ .field,.plainedit{font-size:16px}
+ .codeedit pre,.codeedit textarea{font-size:16px;line-height:1.5}
+ .editrow .field{max-width:none}
+ .ctl-l button{flex:1 1 100%;min-height:46px}
+ .sw-grid{grid-template-columns:repeat(2,1fr)}
+ .cform{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:560px) and (max-height:640px){.scene{height:clamp(190px,34dvh,300px)}.hint{display:none}}
+@media (max-height:500px) and (orientation:landscape){
+ body{justify-content:flex-start}
+ .scene{height:clamp(160px,52dvh,300px)}
+ .opts{flex-direction:row;gap:6px 20px}
+ .ctl.prim{margin-top:10px}.tip{display:none}
+}
 @media (prefers-reduced-motion:reduce){.card,.bar i{transition:none}}
 @supports selector(::-webkit-scrollbar){.codebox,.codeedit pre,.codeedit textarea{scrollbar-width:thin}}
 </style>
@@ -133,14 +210,16 @@ dialog h3 b{display:inline-grid;place-items:center;width:26px;height:26px;border
 </div>
 <div class="ans" id="ansRow" hidden><input id="ans" type="text" placeholder="Écris la traduction en anglais…" autocomplete="off" autocapitalize="off" spellcheck="false"><button id="ok" class="main"></button></div>
 <div class="fb" id="fb"></div>
-<div class="ctl">
+<div class="ctl prim">
   <button id="bL">←</button>
   <button id="flip" class="main"></button>
   <button id="bR">→</button>
-  <button id="undo"></button>
-  <button id="shuf"></button>
 </div>
-<div class="tip">Glisse la carte à gauche ou à droite · clic ou espace pour retourner · ↑ verso, ↓ recto · Ctrl+Z annuler</div>
+<div class="ctl sec">
+  <button id="undo" class="ghost"></button>
+  <button id="shuf" class="ghost"></button>
+</div>
+<div class="tip"><span class="kb">Glisse la carte à gauche ou à droite · clic ou espace pour retourner · ↑ verso, ↓ recto · Ctrl+Z annuler</span><span class="tc">Glisse la carte à gauche ou à droite · touche la carte pour la retourner</span></div>
 <div class="result" id="result" hidden>
   <div>Score final</div><div class="big" id="rs"></div><div id="rp" class="meta" style="justify-content:center"></div>
   <div id="rm" hidden></div>
@@ -336,7 +415,8 @@ function proceed(){step(learn?(lastOK?1:-1):-1)}
 let hist=[],deck=[],i=0,found=0,missed=[],learn=false,drag=null,busy=false;
 const card=$("card"),scene=$("scene"),stamp=$("stamp"),root=document.documentElement;
 /* thème */
-function setTheme(t){root.setAttribute("data-theme",t);$("theme").textContent=t==="dark"?"☀":"☾";try{localStorage.setItem("theme",t)}catch(e){}}
+function updThemeColor(){const m=$("themeColor"),c=getComputedStyle(root).getPropertyValue("--bg").trim();if(m&&c)m.setAttribute("content",c)}
+function setTheme(t){root.setAttribute("data-theme",t);$("theme").textContent=t==="dark"?"☀":"☾";try{localStorage.setItem("theme",t)}catch(e){}updThemeColor()}
 let saved=null;try{saved=localStorage.getItem("theme")}catch(e){}
 setTheme(saved||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));
 $("theme").onclick=()=>setTheme(root.getAttribute("data-theme")==="dark"?"light":"dark");
@@ -348,7 +428,7 @@ function show(){const d=deck[i];card.style.transition="none";card.classList.remo
  resetAns();
  $("count").textContent="Carte "+(i+1)+" / "+deck.length;
  $("bar").style.width=((learn?i:i+1)/deck.length*100)+"%";
- $("score").innerHTML=learn?'<span class="ok">✓ '+found+'</span> · <span class="ko">✗ '+missed.length+'</span>':"";
+ $("score").innerHTML=learn?'<span class="ko">✗ '+missed.length+'</span> · <span class="ok">✓ '+found+'</span>':"";
  $("undo").disabled=!hist.length;
  $("bL").innerHTML=learn?ic("x")+"Pas trouvé":ic("left")+"Précédente";$("bR").innerHTML=learn?ic("check")+"Trouvé":ic("right")+"Suivante"}
 function undo(){if(busy||!hist.length)return;const h=hist.pop();i=h.i;found=h.found;missed=h.missed;
@@ -460,7 +540,7 @@ function applyTheme(id,persist){
  if(id==="auto")clearThemeVars();
  else{const t=allThemes().find(x=>x.id===id);if(t&&t.vars)applyThemeVars(t.vars)}
  if(persist!==false)try{localStorage.setItem("activeTheme",id)}catch(e){}
- renderThemeGrid()}
+ renderThemeGrid();updThemeColor()}
 function renderThemeGrid(){
  $("themeGrid").innerHTML=allThemes().map(t=>{
   const v=t.vars,dots=t.dots||[v.bg,v.accent];
@@ -493,6 +573,9 @@ $("dlgThX").innerHTML=ic("x");$("dlgThX").onclick=()=>$("dlgTheme").close();
 $("dlgTheme").addEventListener("click",e=>{if(e.target===$("dlgTheme"))$("dlgTheme").close()});
 applyTheme(activeTheme,false);
 start();
+/* hors ligne : service worker (HTTPS ou localhost uniquement) */
+if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"||location.hostname==="127.0.0.1"))
+ addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
 </script>
 </body>
 </html>
