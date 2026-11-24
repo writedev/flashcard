@@ -1,7 +1,7 @@
 /* Service worker : permet d'utiliser l'application hors ligne.
    Tous les chemins sont relatifs : ça marche sous https://user.github.io/depot/.
    Après chaque déploiement, incrémente VERSION pour forcer la mise à jour du cache. */
-const VERSION = "v1";
+const VERSION = "v2";
 const CACHE = "flashcards-" + VERSION;
 const PRECACHE = [
   "./",
