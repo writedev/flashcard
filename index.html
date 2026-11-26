@@ -242,6 +242,8 @@ body.done .ctl.prim,body.done .ctl.sec,body.done .tip,body.done .ans,body.done .
  html{overscroll-behavior:none}
  body{padding-top:max(8px,env(safe-area-inset-top,0px));padding-bottom:max(8px,env(safe-area-inset-bottom,0px))}
  body:not(.done){height:100vh;height:100dvh;overflow:hidden}
+ /* iOS : bloquer aussi le document, sinon Safari laisse défiler de quelques pixels */
+ html:has(body:not(.done)){height:100%;overflow:hidden}
  header{flex:none}
  /* options sur une seule ligne, qui défile horizontalement si besoin */
  .opts{flex:none;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch;gap:6px;padding:2px 0;margin-bottom:8px}
