@@ -237,6 +237,28 @@ body.done .ctl.prim,body.done .ctl.sec,body.done .tip,body.done .ans,body.done .
  .ring{width:130px;height:130px;margin:16px auto}.ring>div{width:104px;height:104px}.ring .big{font-size:2rem}
  .miss li{flex-direction:column;gap:2px}.miss li span{text-align:left}
 }
+/* mobile : tout tient sur un écran, la page ne défile plus pendant la révision */
+@media (max-width:560px){
+ html{overscroll-behavior:none}
+ body{padding-top:max(8px,env(safe-area-inset-top,0px));padding-bottom:max(8px,env(safe-area-inset-bottom,0px))}
+ body:not(.done){height:100vh;height:100dvh;overflow:hidden}
+ header{flex:none}
+ /* options sur une seule ligne, qui défile horizontalement si besoin */
+ .opts{flex:none;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch;gap:6px;padding:2px 0;margin-bottom:8px}
+ .opts::-webkit-scrollbar{display:none}
+ .opts .sw,.catw{flex:none}
+ .opts .sw{min-height:34px;padding:6px 12px;font-size:.78rem;white-space:nowrap}
+ .catw select{min-height:34px;padding:6px 30px 6px 12px;font-size:.78rem;max-width:none}
+ .catw::after{right:12px}
+ .bar,.meta,.ans,.fb,.ctl{flex:none}
+ .meta{margin:6px 0 8px}
+ .scene{min-height:160px}
+}
+/* écran tactile : champ JSON en texte simple (la superposition colorée se décale sur iOS) */
+@media (hover:none){
+ .codeedit pre{display:none}
+ .codeedit textarea{color:var(--ink);-webkit-text-fill-color:var(--ink)}
+}
 @media (prefers-reduced-motion:reduce){.card,.bar i{transition:none}.result{animation:none}}
 @supports selector(::-webkit-scrollbar){.codebox,.codeedit pre,.codeedit textarea{scrollbar-width:thin}}
 </style>

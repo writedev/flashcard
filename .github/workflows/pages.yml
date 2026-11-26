@@ -37,5 +37,10 @@ jobs:
         with:
           path: _site
 
+      # Laisse à GitHub le temps d'enregistrer l'artefact : sinon deploy-pages
+      # le cherche trop tôt et échoue avec « No artifacts named github-pages ».
+      - name: Attendre que l'artefact soit disponible
+        run: sleep 15
+
       - id: deployment
         uses: actions/deploy-pages@v4
