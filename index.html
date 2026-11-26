@@ -95,18 +95,6 @@ dialog h3 b{display:inline-grid;place-items:center;width:26px;height:26px;border
 .field:focus{outline:none;border-color:var(--accent)}
 .plainedit{width:100%;font:500 .85rem/1.5 Manrope,sans-serif;padding:12px 14px;border-radius:14px;border:2px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical}
 .plainedit:focus{outline:none;border-color:var(--accent)}
-.codebox{width:100%;max-height:230px;overflow:auto;white-space:pre-wrap;word-break:break-word;font:500 .78rem/1.6 "JetBrains Mono",ui-monospace,Consolas,monospace;padding:14px 16px;border-radius:14px;border:2px solid var(--line);background:var(--bg);color:var(--ink);margin:0}
-.codeedit{position:relative;width:100%;height:190px;border-radius:14px;border:2px solid var(--line);background:var(--bg);overflow:hidden}
-.codeedit:focus-within{border-color:var(--accent)}
-.codeedit pre,.codeedit textarea{position:absolute;inset:0;margin:0;padding:14px 16px;font:500 .78rem/1.6 "JetBrains Mono",ui-monospace,Consolas,monospace;white-space:pre-wrap;word-break:break-word;overflow:auto;border:none}
-.codeedit pre{pointer-events:none;color:var(--ink)}
-.codeedit textarea{background:transparent;color:transparent;caret-color:var(--ink);resize:none}
-.codeedit textarea:focus{outline:none}
-.tok-key{color:var(--tok-key)}.tok-str{color:var(--tok-str)}.tok-num{color:var(--tok-num)}.tok-bool{color:var(--tok-bool)}.tok-punc{color:var(--muted)}
-.rules{margin:4px 0 6px;padding-left:22px;font-size:.83rem;color:var(--ink);line-height:1.5}
-.rules li{margin-bottom:3px}
-.editrow{display:flex;gap:10px;margin-bottom:10px}
-.editrow .field{max-width:260px}
 .ctl-l{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
 .dl-status{margin-top:8px;font-size:.85rem;font-weight:700;white-space:pre-wrap;min-height:1.2em}.dl-status.bad{color:var(--ko)}.dl-status.good{color:var(--ok)}
 .txt{overflow-wrap:anywhere}
@@ -190,8 +178,7 @@ body:has(dialog[open]){overflow:hidden}
  .dl-in{padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));max-height:92dvh}
  .dl-head h2{font-size:1.25rem}
  .field,.plainedit{font-size:16px}
- .codeedit pre,.codeedit textarea{font-size:16px;line-height:1.5}
- .editrow .field{max-width:none}
+   .ctl-l button{flex:1 1 100%;min-height:46px}
  .ctl-l button{flex:1 1 100%;min-height:46px}
  .sw-grid,.cform{grid-template-columns:repeat(2,1fr)}
 }
@@ -256,13 +243,54 @@ body.done .ctl.prim,body.done .ctl.sec,body.done .tip,body.done .ans,body.done .
  .meta{margin:6px 0 8px}
  .scene{min-height:160px}
 }
-/* écran tactile : champ JSON en texte simple (la superposition colorée se décale sur iOS) */
-@media (hover:none){
- .codeedit pre{display:none}
- .codeedit textarea{color:var(--ink);-webkit-text-fill-color:var(--ink)}
+/* --- éditeur de cartes --- */
+.tabs{display:flex;gap:4px;padding:4px;margin:14px 0 16px;border-radius:999px;background:var(--bg);border:1px solid var(--line)}
+.tabs button{flex:1;border:none;background:transparent;color:var(--muted);padding:9px 12px}
+.tabs button[aria-selected="true"]{background:var(--front);color:var(--fink);box-shadow:0 1px 6px rgba(0,0,0,.14)}
+.tabs button:hover{border-color:transparent;color:var(--fink)}
+.ed-title{font-size:1rem;font-weight:700}
+.ed-meta{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:12px 0 8px;font-size:.85rem;font-weight:700;color:var(--muted)}
+.ed-tools{display:flex;flex-wrap:wrap;justify-content:flex-end}
+.ed-tools .ghost{padding:6px 10px}
+.ed-list{display:flex;flex-direction:column;gap:6px}
+.ed-row{display:grid;grid-template-columns:1fr 1fr 34px 34px;grid-template-areas:"fr en more del" "x x x x";gap:6px;align-items:center;padding:6px;border-radius:14px;background:var(--bg);border:1.5px solid transparent}
+.ed-row.bad{border-color:var(--ko)}
+.ed-row input{min-width:0;width:100%;font:600 .9rem Manrope,sans-serif;padding:9px 11px;border-radius:10px;border:1.5px solid var(--line);background:var(--front);color:var(--fink)}
+.ed-row input:focus{outline:none;border-color:var(--accent)}
+.ed-fr{grid-area:fr}.ed-en{grid-area:en}.ed-more{grid-area:more}.ed-del{grid-area:del}
+.ed-row .icon{width:34px;height:34px;border:none;background:transparent;color:var(--muted)}
+.ed-row .icon svg{width:17px;height:17px}
+.ed-row .icon:hover{color:var(--fink)}.ed-row .ed-del:hover{color:var(--ko)}
+.ed-extra{grid-area:x;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.ed-extra[hidden]{display:none}
+.ed-extra input{font-weight:500;font-size:.82rem}
+.ed-add{width:100%;margin-top:8px;border-style:dashed;background:transparent;color:var(--muted)}
+.ed-add:hover{color:var(--fink)}
+#dlg .dl-in{padding-bottom:0}
+#paneImp{padding-bottom:22px}
+.ed-foot{position:sticky;bottom:0;display:flex;align-items:center;gap:12px;margin:14px -22px 0;padding:12px 22px;background:var(--front);border-top:1px solid var(--line)}
+.ed-foot .dl-status{flex:1;margin:0;font-size:.82rem}
+.linkbtn{padding:0;border:none;background:none;color:var(--accent);font-size:.82rem;text-decoration:underline}
+.linkbtn:hover{border:none}
+#paneImp .ctl-l{margin-top:8px}
+.imp-file{margin-top:8px;padding-left:0}
+.ai{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+.ai summary{cursor:pointer;font-weight:700;font-size:.92rem;padding:4px 0}
+.ai[open] summary{margin-bottom:8px}
+.ai-row{display:flex;gap:8px;margin-top:8px}
+.ai-row .field{width:150px;flex:none}
+@media (max-width:560px){
+ .ed-row{grid-template-columns:1fr 34px;grid-template-areas:"fr more" "en del" "x x"}
+ .ed-row input{font-size:16px;padding:9px 10px}
+ .ed-extra{grid-template-columns:1fr}
+ .ed-foot{margin:14px -16px 0;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px))}
+ .ed-foot .main{min-height:46px}
+ .ed-meta{flex-direction:column;align-items:flex-start;gap:4px}
+ .ed-tools{justify-content:flex-start;margin-left:-10px}
+ .ai-row{flex-direction:column}.ai-row .field{width:100%}
+ #paneImp .ctl-l button{flex:1 1 100%}
 }
 @media (prefers-reduced-motion:reduce){.card,.bar i{transition:none}.result{animation:none}}
-@supports selector(::-webkit-scrollbar){.codebox,.codeedit pre,.codeedit textarea{scrollbar-width:thin}}
 </style>
 </head>
 <body>
@@ -304,25 +332,27 @@ body.done .ctl.prim,body.done .ctl.sec,body.done .tip,body.done .ans,body.done .
 <dialog id="dlg" aria-labelledby="dlgT">
  <div class="dl-in">
   <div class="dl-head"><h2 id="dlgT">Mes flashcards</h2><button class="icon" id="dlgX" aria-label="Fermer"></button></div>
-  <p class="dl-cur" id="dlgCur"></p>
-  <h3><b>1</b>Colle ton JSON de flashcards</h3>
-  <p class="dl-help">Le bouton « Coller mes flashcards » charge directement le JSON que tu as copié. Il reste affiché ici : tu peux le corriger et recharger.</p>
-  <div class="codeedit"><pre><code id="jsonHl"></code></pre><textarea id="jsonBox" spellcheck="false" placeholder='{ "title": "Mon paquet", "cards": [ { "fr": "bonjour", "en": "hello" } ] }'></textarea></div>
-  <div class="dl-status" id="dlStatus" role="status" aria-live="polite"></div>
-  <div class="ctl-l"><button id="pasteJson" class="main"></button><button id="loadJson"></button><button id="importBtn"></button><input type="file" id="fileIn" accept=".json,application/json,text/plain" hidden></div>
-  <h3><b>2</b>Pas encore de JSON ? Demande-le à une IA</h3>
-  <p class="dl-help">Copie le prompt dans ChatGPT, Claude, Gemini… Il explique déjà tout le format : la seule partie à adapter est ton contenu, tout en bas.</p>
-  <pre class="codebox" id="pFormat"><code></code></pre>
-  <ol class="rules" id="pRules"></ol>
-  <p class="dl-help" style="margin-top:14px">Exemple de sortie :</p>
-  <pre class="codebox" id="pExample"><code></code></pre>
-  <p class="dl-help" style="margin-top:14px"><b>À adapter :</b> colle ici ton cours, ta liste de vocabulaire ou ton thème.</p>
-  <div class="editrow"><input type="number" class="field" id="wantCount" min="1" max="200" placeholder="Nombre de cartes (optionnel)"></div>
-  <textarea id="userContent" class="plainedit" rows="4" spellcheck="false" placeholder="Colle ici ton cours, ta liste de vocabulaire ou ton thème…"></textarea>
-  <div class="ctl-l"><button id="cpPrompt" class="main"></button></div>
-  <h3><b>3</b>Exemple</h3>
-  <p class="dl-help">Le paquet « Whistleblowers » est l'exemple de ce format. Copie-le pour t'en inspirer, ou recharge-le pour abandonner ton paquet.</p>
-  <div class="ctl-l"><button id="cpExample"></button><button id="loadExample"></button></div>
+  <div class="tabs" role="tablist"><button role="tab" id="tabEd" aria-selected="true" aria-controls="paneEd">Mes cartes</button><button role="tab" id="tabImp" aria-selected="false" aria-controls="paneImp">Importer</button></div>
+  <section id="paneEd" role="tabpanel" aria-labelledby="tabEd">
+   <input type="text" class="field ed-title" id="edTitle" placeholder="Nom du paquet" aria-label="Nom du paquet">
+   <div class="ed-meta"><span id="edCount"></span><span class="ed-tools"><button class="ghost" id="edNew"></button><button class="ghost" id="edCopy"></button><button class="ghost" id="edExample"></button></span></div>
+   <div class="ed-list" id="edList"></div>
+   <button class="ed-add" id="edAdd"></button>
+   <div class="ed-foot"><div class="dl-status" id="edStatus" role="status" aria-live="polite"></div><button class="main" id="edSave"></button></div>
+  </section>
+  <section id="paneImp" role="tabpanel" aria-labelledby="tabImp" hidden>
+   <p class="dl-help">Une carte par ligne : <b>français = anglais</b>. Une ligne <b># Titre</b> crée une catégorie. Le JSON d'une IA marche aussi.</p>
+   <textarea id="impBox" class="plainedit" rows="7" spellcheck="false" autocapitalize="off" placeholder="# Hacking&#10;pirater = to hack&#10;un pirate informatique = a hacker&#10;# Connecteurs&#10;bien que = although"></textarea>
+   <div class="dl-status" id="impStatus" role="status" aria-live="polite"></div>
+   <div class="ctl-l"><button id="pasteJson"></button><button id="impAdd"></button><button id="impReplace" class="main"></button></div>
+   <button class="ghost imp-file" id="importBtn"></button><input type="file" id="fileIn" accept=".json,.txt,application/json,text/plain" hidden>
+   <details class="ai">
+    <summary>Créer les cartes avec une IA</summary>
+    <p class="dl-help">Décris ton cours, copie le prompt dans ChatGPT, Claude ou Gemini, puis colle sa réponse ici avec « Coller ».</p>
+    <textarea id="userContent" class="plainedit" rows="3" spellcheck="false" placeholder="Ton cours, ta liste de vocabulaire ou ton thème…"></textarea>
+    <div class="ai-row"><input type="number" class="field" id="wantCount" min="1" max="200" placeholder="Nombre de cartes" aria-label="Nombre de cartes"><button id="cpPrompt" class="main"></button></div>
+   </details>
+  </section>
  </div>
 </dialog>
 <dialog id="dlgTheme" aria-labelledby="dlgThT">
@@ -402,14 +432,6 @@ let all=toCards(EXAMPLE);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const fmt=d=>'{\n  "title": '+JSON.stringify(d.title)+',\n  "subtitle": '+JSON.stringify(d.subtitle||"")+',\n  "cards": [\n'+d.cards.map(c=>'    '+JSON.stringify(c)).join(',\n')+'\n  ]\n}';
 const pick=f=>EXAMPLE.cards.find(c=>c.fr===f);
-function hlJSON(src){
- if(!src)return"";
- const re=/("(?:\\.|[^"\\])*"(\s*:)?)|(\btrue\b|\bfalse\b|\bnull\b)|(-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)|([{}\[\],:])/g;
- let out="",last=0,m;
- while((m=re.exec(src))){out+=esc(src.slice(last,m.index));const tok=m[0];let cls="tok-punc";
-  if(m[1])cls=m[2]?"tok-key":"tok-str";else if(m[3])cls="tok-bool";else if(m[4])cls="tok-num";
-  out+='<span class="'+cls+'">'+esc(tok)+'</span>';last=re.lastIndex}
- return out+esc(src.slice(last))}
 const FORMAT_TXT=`{
   "title": "Titre du paquet",
   "subtitle": "Sous-titre court (optionnel)",
@@ -454,13 +476,13 @@ function parseDeck(text){
   const a=t.search(/[\[{]/),b=Math.max(t.lastIndexOf("}"),t.lastIndexOf("]"));
   try{if(a<0||b<a)throw e;d=JSON.parse(t.slice(a,b+1))}catch(e2){throw new Error("JSON invalide : "+e.message)}}
  return checkDeck(d)}
-let deckInfo={title:EXAMPLE.title,n:EXAMPLE.cards.length,custom:false};
+let deckInfo={title:EXAMPLE.title,n:EXAMPLE.cards.length,custom:false},curDeck=EXAMPLE;
 function setDeck(d,custom,persist){
- all=toCards(d);deckInfo={title:d.title,n:d.cards.length,custom};
+ all=toCards(d);curDeck=d;deckInfo={title:d.title,n:d.cards.length,custom};
  $("dtitle").textContent=d.title;$("dsub").textContent=d.subtitle||"Français au recto · anglais au verso";document.title=d.title+" – Flashcards";
- if(persist){try{custom?localStorage.setItem("customDeck",JSON.stringify(d)):localStorage.removeItem("customDeck")}catch(e){}}
+ if(persist){try{custom?localStorage.setItem("customDeck",JSON.stringify({title:d.title,subtitle:d.subtitle||"",cards:cleanCards(d.cards)})):localStorage.removeItem("customDeck")}catch(e){}}
  cat="";buildCats();start()}
-const P={left:'<path d="M19 12H5M11 6l-6 6 6 6"/>',right:'<path d="M5 12h14M13 6l6 6-6 6"/>',x:'<path d="M6 6l12 12M18 6L6 18"/>',check:'<path d="M4 12.5l5 5L20 6.5"/>',flip:'<path d="M20 11a8 8 0 0 0-14-4L4 9M4 4v5h5M4 13a8 8 0 0 0 14 4l2-2M20 20v-5h-5"/>',shuffle:'<path d="M3 7h3c5 0 6 10 12 10h3M3 17h3c1.5 0 2.7-.7 3.7-1.8M14.3 8.8C15.3 7.7 16.5 7 18 7h3M18 4l3 3-3 3M18 14l3 3-3 3"/>',eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',undo:'<path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>',deck:'<path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/>',copy:'<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/>',upload:'<path d="M12 16V4M6 10l6-6 6 6M4 20h16"/>',paste:'<rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3h6v1M9 11h6M9 15h4"/>',redo:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/>',palette:'<path d="M12 3a9 9 0 1 0 0 18c1.2 0 2-1 2-2 0-.6-.3-1-.6-1.4-.3-.4-.5-.8-.5-1.3 0-1 .8-1.8 1.8-1.8H16a4 4 0 0 0 4-4c0-4.4-3.6-7.5-8-7.5z"/><circle cx="7.5" cy="10.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="12" cy="7.2" r="1.2" fill="currentColor" stroke="none"/><circle cx="16.3" cy="10" r="1.2" fill="currentColor" stroke="none"/>',trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',moon:'<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>',max:'<path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/>',min:'<path d="M9 4v5H4M20 9h-5V4M15 20v-5h5M4 15h5v5"/>'};
+const P={left:'<path d="M19 12H5M11 6l-6 6 6 6"/>',right:'<path d="M5 12h14M13 6l6 6-6 6"/>',x:'<path d="M6 6l12 12M18 6L6 18"/>',check:'<path d="M4 12.5l5 5L20 6.5"/>',flip:'<path d="M20 11a8 8 0 0 0-14-4L4 9M4 4v5h5M4 13a8 8 0 0 0 14 4l2-2M20 20v-5h-5"/>',shuffle:'<path d="M3 7h3c5 0 6 10 12 10h3M3 17h3c1.5 0 2.7-.7 3.7-1.8M14.3 8.8C15.3 7.7 16.5 7 18 7h3M18 4l3 3-3 3M18 14l3 3-3 3"/>',eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',undo:'<path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>',deck:'<path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/>',copy:'<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/>',upload:'<path d="M12 16V4M6 10l6-6 6 6M4 20h16"/>',paste:'<rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3h6v1M9 11h6M9 15h4"/>',redo:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/>',palette:'<path d="M12 3a9 9 0 1 0 0 18c1.2 0 2-1 2-2 0-.6-.3-1-.6-1.4-.3-.4-.5-.8-.5-1.3 0-1 .8-1.8 1.8-1.8H16a4 4 0 0 0 4-4c0-4.4-3.6-7.5-8-7.5z"/><circle cx="7.5" cy="10.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="12" cy="7.2" r="1.2" fill="currentColor" stroke="none"/><circle cx="16.3" cy="10" r="1.2" fill="currentColor" stroke="none"/>',trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',moon:'<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>',max:'<path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/>',min:'<path d="M9 4v5H4M20 9h-5V4M15 20v-5h5M4 15h5v5"/>',plus:'<path d="M12 5v14M5 12h14"/>',dots:'<circle cx="5" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.6" fill="currentColor" stroke="none"/>'};
 const ic=n=>'<svg viewBox="0 0 24 24" aria-hidden="true">'+P[n]+'</svg>';
 let typing=false,checked=false,lastOK=false,noFuse=false;
 const STOP=new Set(["the","x","y","someone","something","somebody","sb","sth","smth"]);
@@ -559,51 +581,105 @@ if(!document.fullscreenEnabled)$("fs").style.display="none";
 $("fs").onclick=()=>{try{(document.fullscreenElement?document.exitFullscreen():root.requestFullscreen()).catch(()=>{})}catch(e){}};
 const updFs=()=>{const on=!!document.fullscreenElement;$("fs").innerHTML=ic(on?"min":"max");$("fs").setAttribute("aria-label",on?"Quitter le plein écran":"Plein écran")};
 document.addEventListener("fullscreenchange",updFs);updFs();
-document.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="z"&&e.target.id!=="ans"){e.preventDefault();undo();return}
+document.addEventListener("keydown",e=>{if(document.querySelector("dialog[open]"))return;if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="z"&&e.target.id!=="ans"){e.preventDefault();undo();return}
  if(!$("result").hidden)return;
  if(e.target.id==="ans"){if(e.key==="Enter"){e.preventDefault();checked?proceed():check()}return}
  if(e.key==="ArrowUp"){e.preventDefault();card.classList.add("flip")}else if(e.key==="ArrowDown"){e.preventDefault();card.classList.remove("flip")}
  else if(e.key==="ArrowLeft")step(-1);else if(e.key==="ArrowRight")step(1);
  else if(e.key===" "&&!["BUTTON","INPUT"].includes(e.target.tagName)){e.preventDefault();flip()}});
 $("flip").innerHTML=ic("flip")+"Retourner";$("shuf").innerHTML=ic("shuffle")+"Mélanger";$("undo").innerHTML=ic("undo")+"Annuler";$("undo").onclick=undo;$("again").innerHTML=ic("redo")+"Recommencer";
-/* --- éditeur JSON avec coloration --- */
-const jsonTa=$("jsonBox"),jsonHl=$("jsonHl");
-function updJsonHl(){jsonHl.innerHTML=hlJSON(jsonTa.value)}
-jsonTa.addEventListener("input",updJsonHl);
-jsonTa.addEventListener("scroll",()=>{jsonHl.parentElement.scrollTop=jsonTa.scrollTop;jsonHl.parentElement.scrollLeft=jsonTa.scrollLeft});
-function fillEditor(text){jsonTa.value=text;updJsonHl()}
-/* --- mes flashcards (JSON) --- */
-const dlg=$("dlg"),stat=(t,k)=>{$("dlStatus").textContent=t;$("dlStatus").className="dl-status "+(k||"")};
-let lastDeckText="";
+/* --- mes flashcards : éditeur de cartes + import --- */
+const dlg=$("dlg");
+const setStat=(id,t,k)=>{$(id).textContent=t;$(id).className="dl-status "+(k||"")};
 async function copyText(text,btn){let ok=false;
  try{await navigator.clipboard.writeText(text);ok=true}catch(e){
   const t=document.createElement("textarea");t.value=text;t.style.cssText="position:fixed;opacity:0";document.body.appendChild(t);t.select();
   try{ok=document.execCommand("copy")}catch(e2){}t.remove()}
  const old=btn.innerHTML;btn.innerHTML=ic(ok?"check":"x")+(ok?"Copié !":"Copie impossible");setTimeout(()=>btn.innerHTML=old,1800);return ok}
-function openDlg(){$("pFormat").querySelector("code").innerHTML=hlJSON(FORMAT_TXT);
- $("pRules").innerHTML=RULES.map(r=>"<li>"+esc(r).replace(/&quot;([^&]*?)&quot;/g,'<b>&quot;$1&quot;</b>')+"</li>").join("");
- $("pExample").querySelector("code").innerHTML=hlJSON(EXAMPLE_OUT);
- stat("");
- $("dlgCur").textContent="Paquet actuel : « "+deckInfo.title+" » · "+deckInfo.n+" cartes · "+(deckInfo.custom?"personnalisé":"exemple");
- dlg.showModal()}
-function loadFrom(text){try{const d=parseDeck(text);lastDeckText=text;setDeck(d,true,true);fillEditor(text);stat("« "+d.title+" » chargé : "+d.cards.length+" cartes.","good")}catch(e){stat(e.message,"bad")}}
-$("myDecks").innerHTML=ic("deck")+'<span class="lbl">Mes flashcards</span>';$("myDecks").onclick=openDlg;
-$("dlgX").innerHTML=ic("x");$("dlgX").onclick=()=>dlg.close();
-dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
-$("cpPrompt").innerHTML=ic("copy")+"Copier le prompt";$("cpPrompt").onclick=e=>copyText(buildPrompt(),e.currentTarget);
-$("loadJson").innerHTML=ic("check")+"Charger";
-$("pasteJson").innerHTML=ic("paste")+"Coller mes flashcards";
-$("pasteJson").onclick=async()=>{let t="";
- try{t=await navigator.clipboard.readText()}catch(e){}
- if(!t.trim()){jsonTa.focus();stat("Impossible de lire le presse-papiers ici : colle le JSON dans le champ (Ctrl+V ou appui long → Coller), puis « Charger ».","bad");return}
- fillEditor(t);loadFrom(t)};$("loadJson").onclick=()=>loadFrom(jsonTa.value);
-$("importBtn").innerHTML=ic("upload")+"Importer un fichier .json";$("importBtn").onclick=()=>$("fileIn").click();
+const cleanCards=cs=>cs.map(c=>{const o={fr:c.fr,en:c.en};if(c.category)o.category=c.category;if(c.note)o.note=c.note;return o});
+/* format texte : « français = anglais », « # Catégorie » */
+function parseLines(text){const cards=[],bad=[];let cat="";
+ text.split(/\r?\n/).forEach((l,k)=>{l=l.trim();if(!l)return;
+  if(l[0]==="#"){cat=l.replace(/^#+\s*/,"");return}
+  const p=l.split(/\s*(?:\t|=|;|→|->|\s[–—-]\s)\s*/);
+  if(p.length<2||!p[0]||!p[1]){bad.push(k+1);return}
+  cards.push({fr:p[0],en:p[1],note:p.slice(2).join(" ").trim(),category:cat})});
+ if(bad.length)throw new Error("Ligne"+(bad.length>1?"s ":" ")+bad.slice(0,8).join(", ")+(bad.length>8?"…":"")+" : sépare le français et l'anglais par « = ».");
+ return checkDeck({title:"",cards})}
+function parseAny(text){const t=text.trim();if(!t)throw new Error("Rien à importer : colle d'abord tes cartes.");
+ return /^(```|\{|\[)/.test(t)?parseDeck(t):parseLines(t)}
+/* éditeur */
+let draft=[],dirty=false,prevDeck=null;
+function rowHtml(c,k){const more=!!(c.category||c.note);
+ return '<div class="ed-row" data-i="'+k+'">'
+  +'<input class="ed-fr" data-k="fr" value="'+esc(c.fr)+'" placeholder="Français" aria-label="Français, carte '+(k+1)+'" autocomplete="off">'
+  +'<input class="ed-en" data-k="en" value="'+esc(c.en)+'" placeholder="Anglais" aria-label="Anglais, carte '+(k+1)+'" autocomplete="off" autocapitalize="off">'
+  +'<button class="icon ed-more'+(more?" on":"")+'" aria-label="Catégorie et note" aria-expanded="false">'+ic("dots")+'</button>'
+  +'<button class="icon ed-del" aria-label="Supprimer la carte '+(k+1)+'">'+ic("trash")+'</button>'
+  +'<div class="ed-extra" hidden><input data-k="category" value="'+esc(c.category||"")+'" placeholder="Catégorie (optionnel)" aria-label="Catégorie"><input data-k="note" value="'+esc(c.note||"")+'" placeholder="Note (optionnel)" aria-label="Note"></div></div>'}
+function updCount(){const n=draft.filter(c=>c.fr.trim()||c.en.trim()).length;$("edCount").textContent=n+" carte"+(n>1?"s":"")}
+function renderEd(){$("edList").innerHTML=draft.map(rowHtml).join("");updCount()}
+function loadDraft(){draft=curDeck.cards.map(c=>({fr:c.fr,en:c.en,category:c.category||"",note:c.note||""}));
+ $("edTitle").value=curDeck.title;dirty=false;renderEd()}
+function addCard(after){const k=after==null?draft.length:after+1;
+ const prev=draft[k-1];draft.splice(k,0,{fr:"",en:"",category:prev?prev.category:"",note:""});dirty=true;renderEd();
+ const r=$("edList").children[k];r.scrollIntoView({block:"nearest"});r.querySelector(".ed-fr").focus()}
+function setTab(t){const ed=t==="ed";$("tabEd").setAttribute("aria-selected",ed);$("tabImp").setAttribute("aria-selected",!ed);
+ $("paneEd").hidden=!ed;$("paneImp").hidden=ed}
+function openDlg(){loadDraft();setStat("edStatus","");setStat("impStatus","");setTab("ed");dlg.showModal();$("dlg").querySelector(".dl-in").scrollTop=0}
+function closeDlg(){if(dirty&&!confirm("Tu as des modifications non enregistrées. Fermer quand même ?"))return false;dirty=false;dlg.close();return true}
+$("edList").addEventListener("input",e=>{const r=e.target.closest(".ed-row");if(!r)return;
+ const c=draft[+r.dataset.i];c[e.target.dataset.k]=e.target.value;dirty=true;r.classList.remove("bad");
+ if(e.target.dataset.k==="category"||e.target.dataset.k==="note")r.querySelector(".ed-more").classList.toggle("on",!!(c.category||c.note));
+ updCount()});
+$("edList").addEventListener("click",e=>{const r=e.target.closest(".ed-row");if(!r)return;const k=+r.dataset.i;
+ if(e.target.closest(".ed-del")){draft.splice(k,1);dirty=true;renderEd();const n=$("edList").children[Math.min(k,draft.length-1)];if(n)n.querySelector(".ed-del").focus()}
+ else if(e.target.closest(".ed-more")){const x=r.querySelector(".ed-extra"),b=r.querySelector(".ed-more");x.hidden=!x.hidden;b.setAttribute("aria-expanded",!x.hidden);if(!x.hidden)x.querySelector("input").focus()}});
+$("edList").addEventListener("keydown",e=>{if(e.key!=="Enter")return;const r=e.target.closest(".ed-row");if(!r)return;e.preventDefault();
+ const k=+r.dataset.i;if(e.target.dataset.k==="fr"){r.querySelector(".ed-en").focus();return}
+ const n=$("edList").children[k+1];if(n&&!e.shiftKey)n.querySelector(".ed-fr").focus();else addCard(k)});
+$("edTitle").addEventListener("input",()=>{dirty=true});
+$("edAdd").innerHTML=ic("plus")+"Ajouter une carte";$("edAdd").onclick=()=>addCard();
+$("edSave").innerHTML=ic("check")+"Enregistrer";
+$("edSave").onclick=()=>{const rows=[...$("edList").children];let first=null,nbad=0;
+ draft.forEach((c,k)=>{const f=c.fr.trim(),en=c.en.trim();if(!!f!==!!en){nbad++;rows[k].classList.add("bad");first=first||rows[k]}});
+ if(nbad){setStat("edStatus",nbad+" carte"+(nbad>1?"s incomplètes":" incomplète")+" : remplis le français et l'anglais, ou supprime-la.","bad");first.scrollIntoView({block:"center"});first.querySelector(first.querySelector(".ed-fr").value.trim()?".ed-en":".ed-fr").focus();return}
+ const cards=draft.filter(c=>c.fr.trim()&&c.en.trim());
+ if(!cards.length){setStat("edStatus","Ajoute au moins une carte.","bad");return}
+ prevDeck=curDeck;setDeck(checkDeck({title:$("edTitle").value.trim()||"Mes flashcards",subtitle:curDeck.subtitle,cards}),true,true);dirty=false;dlg.close()};
+$("edNew").innerHTML=ic("plus")+"Nouveau";$("edNew").onclick=()=>{if((draft.length||dirty)&&!confirm("Commencer un paquet vide ? Le paquet actuel sera remplacé quand tu enregistreras."))return;
+ draft=[{fr:"",en:"",category:"",note:""}];$("edTitle").value="";dirty=true;renderEd();$("edTitle").focus()};
+$("edCopy").innerHTML=ic("copy")+"Copier (JSON)";$("edCopy").title="Copier le paquet au format JSON pour le partager ou le sauvegarder";
+$("edCopy").onclick=e=>copyText(fmt({title:$("edTitle").value.trim()||curDeck.title,subtitle:curDeck.subtitle,cards:cleanCards(draft.filter(c=>c.fr.trim()&&c.en.trim()))}),e.currentTarget);
+$("edExample").innerHTML=ic("redo")+"Exemple";$("edExample").title="Revenir au paquet d'exemple";
+$("edExample").onclick=()=>{if(deckInfo.custom&&!confirm("Remplacer ton paquet par le paquet d'exemple ?"))return;prevDeck=curDeck;setDeck(EXAMPLE,false,true);loadDraft();setStat("edStatus","Paquet d'exemple rechargé.","good")};
+$("tabEd").onclick=()=>setTab("ed");$("tabImp").onclick=()=>{setTab("imp");};
+/* import */
+function doImport(text,mode){let d;try{d=parseAny(text)}catch(e){setStat("impStatus",e.message,"bad");return}
+ if(dirty&&!confirm("Tes modifications non enregistrées dans « Mes cartes » seront perdues. Continuer ?"))return;
+ prevDeck=curDeck;const n=d.cards.length;
+ if(mode==="add"){const base=curDeck.cards.map(c=>({...c}));d=checkDeck({title:curDeck.title,subtitle:curDeck.subtitle,cards:base.concat(d.cards)})}
+ else d.title=d.title&&d.title!=="Mes flashcards"?d.title:(deckInfo.custom?curDeck.title:"Mes flashcards");
+ setDeck(d,true,true);loadDraft();$("impBox").value="";setTab("ed");
+ setStat("edStatus",n+" carte"+(n>1?"s":"")+(mode==="add"?" ajoutée"+(n>1?"s":""):" importée"+(n>1?"s":"")+", paquet remplacé")+".","good");
+ $("edStatus").insertAdjacentHTML("beforeend",' <button class="linkbtn" id="edUndo">Annuler</button>');
+ $("edUndo").onclick=()=>{setDeck(prevDeck,prevDeck!==EXAMPLE,true);loadDraft();setStat("edStatus","Import annulé.","good")}}
+$("impReplace").innerHTML=ic("check")+"Remplacer le paquet";$("impReplace").onclick=()=>doImport($("impBox").value,"replace");
+$("impAdd").innerHTML=ic("plus")+"Ajouter au paquet";$("impAdd").onclick=()=>doImport($("impBox").value,"add");
+$("pasteJson").innerHTML=ic("paste")+"Coller";
+$("pasteJson").onclick=async()=>{let t="";try{t=await navigator.clipboard.readText()}catch(e){}
+ if(!t.trim()){$("impBox").focus();setStat("impStatus","Le navigateur bloque la lecture du presse-papiers : colle dans le champ (Ctrl+V ou appui long → Coller).","bad");return}
+ $("impBox").value=t;try{const n=parseAny(t).cards.length;setStat("impStatus",n+" carte"+(n>1?"s":"")+" prête"+(n>1?"s":"")+" : choisis « Ajouter » ou « Remplacer ».","good")}catch(e){setStat("impStatus",e.message,"bad")}};
+$("impBox").addEventListener("input",()=>setStat("impStatus",""));
+$("importBtn").innerHTML=ic("upload")+"Importer un fichier (.json ou .txt)";$("importBtn").onclick=()=>$("fileIn").click();
 $("fileIn").onchange=async e=>{const f=e.target.files[0];e.target.value="";if(!f)return;
- try{const t=await f.text();fillEditor(t);loadFrom(t)}catch(err){stat("Lecture du fichier impossible.","bad")}};
-$("cpExample").innerHTML=ic("copy")+"Copier l'exemple JSON";
-$("cpExample").onclick=async e=>{const b=e.currentTarget,t=fmt(EXAMPLE);if(!await copyText(t,b)){fillEditor(t);stat("Copie automatique impossible : l'exemple est dans le champ ci-dessus, copie-le à la main.","bad")}};
-$("loadExample").innerHTML=ic("redo")+"Recharger le paquet d'exemple";$("loadExample").onclick=()=>{lastDeckText="";setDeck(EXAMPLE,false,true);fillEditor("");dlg.close()};
-try{const sv=localStorage.getItem("customDeck");if(sv){const txt=sv;setDeck(checkDeck(JSON.parse(sv)),true,false);lastDeckText=txt;fillEditor(txt)}}catch(e){try{localStorage.removeItem("customDeck")}catch(e2){}}
+ try{$("impBox").value=await f.text();$("pasteJson").blur();const n=parseAny($("impBox").value).cards.length;setStat("impStatus",n+" carte"+(n>1?"s":"")+" prête"+(n>1?"s":"")+" : choisis « Ajouter » ou « Remplacer ».","good")}catch(err){setStat("impStatus",err.message||"Lecture du fichier impossible.","bad")}};
+$("cpPrompt").innerHTML=ic("copy")+"Copier le prompt";$("cpPrompt").onclick=e=>copyText(buildPrompt(),e.currentTarget);
+$("myDecks").innerHTML=ic("deck")+'<span class="lbl">Mes flashcards</span>';$("myDecks").onclick=openDlg;
+$("dlgX").innerHTML=ic("x");$("dlgX").onclick=closeDlg;
+dlg.addEventListener("click",e=>{if(e.target===dlg)closeDlg()});
+dlg.addEventListener("cancel",e=>{e.preventDefault();closeDlg()});
+try{const sv=localStorage.getItem("customDeck");if(sv)setDeck(checkDeck(JSON.parse(sv)),true,false)}catch(e){try{localStorage.removeItem("customDeck")}catch(e2){}}
 
 /* --- thèmes --- */
 const THEME_KEYS=["bg","bg2","ink","muted","front","fink","back","bink","accent","ok","ko","line","shadow"];
