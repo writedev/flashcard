@@ -281,7 +281,12 @@ body.done .ctl.prim,body.done .ctl.sec,body.done .tip,body.done .ans,body.done .
  <div class="dl-in">
   <div class="dl-head"><h2 id="dlgT">Mes flashcards</h2><button class="icon" id="dlgX" aria-label="Fermer"></button></div>
   <p class="dl-cur" id="dlgCur"></p>
-  <h3><b>1</b>Demande à une IA de créer ton paquet</h3>
+  <h3><b>1</b>Colle ton JSON de flashcards</h3>
+  <p class="dl-help">Le bouton « Coller mes flashcards » charge directement le JSON que tu as copié. Il reste affiché ici : tu peux le corriger et recharger.</p>
+  <div class="codeedit"><pre><code id="jsonHl"></code></pre><textarea id="jsonBox" spellcheck="false" placeholder='{ "title": "Mon paquet", "cards": [ { "fr": "bonjour", "en": "hello" } ] }'></textarea></div>
+  <div class="dl-status" id="dlStatus" role="status" aria-live="polite"></div>
+  <div class="ctl-l"><button id="pasteJson" class="main"></button><button id="loadJson"></button><button id="importBtn"></button><input type="file" id="fileIn" accept=".json,application/json,text/plain" hidden></div>
+  <h3><b>2</b>Pas encore de JSON ? Demande-le à une IA</h3>
   <p class="dl-help">Copie le prompt dans ChatGPT, Claude, Gemini… Il explique déjà tout le format : la seule partie à adapter est ton contenu, tout en bas.</p>
   <pre class="codebox" id="pFormat"><code></code></pre>
   <ol class="rules" id="pRules"></ol>
@@ -291,11 +296,6 @@ body.done .ctl.prim,body.done .ctl.sec,body.done .tip,body.done .ans,body.done .
   <div class="editrow"><input type="number" class="field" id="wantCount" min="1" max="200" placeholder="Nombre de cartes (optionnel)"></div>
   <textarea id="userContent" class="plainedit" rows="4" spellcheck="false" placeholder="Colle ici ton cours, ta liste de vocabulaire ou ton thème…"></textarea>
   <div class="ctl-l"><button id="cpPrompt" class="main"></button></div>
-  <h3><b>2</b>Colle le JSON reçu</h3>
-  <p class="dl-help">Il reste affiché ici après le chargement, tu peux le corriger et recharger.</p>
-  <div class="codeedit"><pre><code id="jsonHl"></code></pre><textarea id="jsonBox" spellcheck="false" placeholder='{ "title": "Mon paquet", "cards": [ { "fr": "bonjour", "en": "hello" } ] }'></textarea></div>
-  <div class="dl-status" id="dlStatus" role="status" aria-live="polite"></div>
-  <div class="ctl-l"><button id="loadJson" class="main"></button><button id="importBtn"></button><input type="file" id="fileIn" accept=".json,application/json,text/plain" hidden></div>
   <h3><b>3</b>Exemple</h3>
   <p class="dl-help">Le paquet « Whistleblowers » est l'exemple de ce format. Copie-le pour t'en inspirer, ou recharge-le pour abandonner ton paquet.</p>
   <div class="ctl-l"><button id="cpExample"></button><button id="loadExample"></button></div>
@@ -436,7 +436,7 @@ function setDeck(d,custom,persist){
  $("dtitle").textContent=d.title;$("dsub").textContent=d.subtitle||"Français au recto · anglais au verso";document.title=d.title+" – Flashcards";
  if(persist){try{custom?localStorage.setItem("customDeck",JSON.stringify(d)):localStorage.removeItem("customDeck")}catch(e){}}
  cat="";buildCats();start()}
-const P={left:'<path d="M19 12H5M11 6l-6 6 6 6"/>',right:'<path d="M5 12h14M13 6l6 6-6 6"/>',x:'<path d="M6 6l12 12M18 6L6 18"/>',check:'<path d="M4 12.5l5 5L20 6.5"/>',flip:'<path d="M20 11a8 8 0 0 0-14-4L4 9M4 4v5h5M4 13a8 8 0 0 0 14 4l2-2M20 20v-5h-5"/>',shuffle:'<path d="M3 7h3c5 0 6 10 12 10h3M3 17h3c1.5 0 2.7-.7 3.7-1.8M14.3 8.8C15.3 7.7 16.5 7 18 7h3M18 4l3 3-3 3M18 14l3 3-3 3"/>',eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',undo:'<path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>',deck:'<path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/>',copy:'<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/>',upload:'<path d="M12 16V4M6 10l6-6 6 6M4 20h16"/>',redo:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/>',palette:'<path d="M12 3a9 9 0 1 0 0 18c1.2 0 2-1 2-2 0-.6-.3-1-.6-1.4-.3-.4-.5-.8-.5-1.3 0-1 .8-1.8 1.8-1.8H16a4 4 0 0 0 4-4c0-4.4-3.6-7.5-8-7.5z"/><circle cx="7.5" cy="10.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="12" cy="7.2" r="1.2" fill="currentColor" stroke="none"/><circle cx="16.3" cy="10" r="1.2" fill="currentColor" stroke="none"/>',trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',moon:'<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>',max:'<path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/>',min:'<path d="M9 4v5H4M20 9h-5V4M15 20v-5h5M4 15h5v5"/>'};
+const P={left:'<path d="M19 12H5M11 6l-6 6 6 6"/>',right:'<path d="M5 12h14M13 6l6 6-6 6"/>',x:'<path d="M6 6l12 12M18 6L6 18"/>',check:'<path d="M4 12.5l5 5L20 6.5"/>',flip:'<path d="M20 11a8 8 0 0 0-14-4L4 9M4 4v5h5M4 13a8 8 0 0 0 14 4l2-2M20 20v-5h-5"/>',shuffle:'<path d="M3 7h3c5 0 6 10 12 10h3M3 17h3c1.5 0 2.7-.7 3.7-1.8M14.3 8.8C15.3 7.7 16.5 7 18 7h3M18 4l3 3-3 3M18 14l3 3-3 3"/>',eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',undo:'<path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>',deck:'<path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/>',copy:'<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/>',upload:'<path d="M12 16V4M6 10l6-6 6 6M4 20h16"/>',paste:'<rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3h6v1M9 11h6M9 15h4"/>',redo:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/>',palette:'<path d="M12 3a9 9 0 1 0 0 18c1.2 0 2-1 2-2 0-.6-.3-1-.6-1.4-.3-.4-.5-.8-.5-1.3 0-1 .8-1.8 1.8-1.8H16a4 4 0 0 0 4-4c0-4.4-3.6-7.5-8-7.5z"/><circle cx="7.5" cy="10.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="12" cy="7.2" r="1.2" fill="currentColor" stroke="none"/><circle cx="16.3" cy="10" r="1.2" fill="currentColor" stroke="none"/>',trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',moon:'<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>',max:'<path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/>',min:'<path d="M9 4v5H4M20 9h-5V4M15 20v-5h5M4 15h5v5"/>'};
 const ic=n=>'<svg viewBox="0 0 24 24" aria-hidden="true">'+P[n]+'</svg>';
 let typing=false,checked=false,lastOK=false,noFuse=false;
 const STOP=new Set(["the","x","y","someone","something","somebody","sb","sth","smth"]);
@@ -567,7 +567,12 @@ $("myDecks").innerHTML=ic("deck")+'<span class="lbl">Mes flashcards</span>';$("m
 $("dlgX").innerHTML=ic("x");$("dlgX").onclick=()=>dlg.close();
 dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
 $("cpPrompt").innerHTML=ic("copy")+"Copier le prompt";$("cpPrompt").onclick=e=>copyText(buildPrompt(),e.currentTarget);
-$("loadJson").innerHTML=ic("check")+"Charger mes flashcards";$("loadJson").onclick=()=>loadFrom(jsonTa.value);
+$("loadJson").innerHTML=ic("check")+"Charger";
+$("pasteJson").innerHTML=ic("paste")+"Coller mes flashcards";
+$("pasteJson").onclick=async()=>{let t="";
+ try{t=await navigator.clipboard.readText()}catch(e){}
+ if(!t.trim()){jsonTa.focus();stat("Impossible de lire le presse-papiers ici : colle le JSON dans le champ (Ctrl+V ou appui long → Coller), puis « Charger ».","bad");return}
+ fillEditor(t);loadFrom(t)};$("loadJson").onclick=()=>loadFrom(jsonTa.value);
 $("importBtn").innerHTML=ic("upload")+"Importer un fichier .json";$("importBtn").onclick=()=>$("fileIn").click();
 $("fileIn").onchange=async e=>{const f=e.target.files[0];e.target.value="";if(!f)return;
  try{const t=await f.text();fillEditor(t);loadFrom(t)}catch(err){stat("Lecture du fichier impossible.","bad")}};
