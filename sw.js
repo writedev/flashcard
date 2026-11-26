@@ -1,7 +1,7 @@
 /* Service worker : permet d'utiliser l'application hors ligne.
    Tous les chemins sont relatifs : ça marche sous https://user.github.io/depot/.
    Après chaque déploiement, incrémente VERSION pour forcer la mise à jour du cache. */
-const VERSION = "v2";
+const VERSION = "v3";
 const CACHE = "flashcards-" + VERSION;
 const PRECACHE = [
   "./",
@@ -44,7 +44,7 @@ self.addEventListener("fetch", e => {
   // Pages : réseau d'abord (contenu à jour), cache si hors ligne.
   if (req.mode === "navigate") {
     e.respondWith(
-      fetch(req)
+      fetch(req, { cache: "no-cache" })  // revalide : pas d'ancienne page tirée du cache HTTP
         .then(res => {
           const copy = res.clone();
           caches.open(CACHE).then(c => c.put("index.html", copy));
